@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node ./dist/main.js",
-    "build": "npm run all:build",
+    "build": "npm run back:build",
     "back:build": "npx tsc",
     "back:run": "npm run back:build && npm run start",
     "back:test": "npx jest --coverage ./back/test",
