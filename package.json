@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A minimal Nodejs server and angular front quick start bundle",
   "main": "dist/main.js",
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "start": "node ./dist/main.js",
     "back:build": "npx tsc",
