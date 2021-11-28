@@ -1,0 +1,23 @@
+on: push
+name: Backend test
+jobs:
+  test:
+    name: test back
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - uses: actions/checkout@master
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm back:install
+        run: npm install
+        env:
+          CI: true
+      - name: npm back:test
+        run: npm run back:test_ci
+        env:
+          CI: true
