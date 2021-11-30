@@ -5,14 +5,14 @@ let server_config: server.express_app_config;
 
 if ( process.env.ON_HEROKU ) {
     server_config = {
-        ip: "0.0.0.0",
-        port: parseInt(process.env.PORT || "80"),
-    }
+        ip: '0.0.0.0',
+        port: parseInt( process.env.PORT || '80' ),
+    };
 } else {
     server_config = {
-        ip: "127.0.0.1",
-        port: parseInt(process.env.PORT || "8080"),
-    }
+        ip: '127.0.0.1',
+        port: parseInt( process.env.PORT || '8080' ),
+    };
 }
 
 global_logger.info( 'Application started' );
