@@ -1,7 +1,7 @@
 import * as express from 'express';
 import path from 'path';
 
-export interface exprtess_app_config {
+export interface express_app_config {
     ip: string,
     port: number
 }
@@ -18,9 +18,9 @@ export class express_app {
 
     /**
      * Creates an instance of express_app.
-     * @param {exprtess_app_config} config
+     * @param {express_app_config} config
      */
-    constructor ( public config: exprtess_app_config ) {
+    constructor ( public config: express_app_config ) {
         this.app = express.default();
     }
 
@@ -56,11 +56,13 @@ export class express_app {
         } );
     }
 
+
     /**
      *
      *
+     * @param {function(): void} [callback]
      */
-    listen () {
-        this.app.listen( this.config.port, this.config.ip );
+    listen ( callback?: () => void ) {
+        this.app.listen( this.config.port, this.config.ip, callback );
     }
 }
