@@ -1,5 +1,31 @@
 import * as express from 'express';
 import path from 'path';
+import * as mongodb from 'mongodb';
+
+const mongo_client = new mongodb.MongoClient( 'mongodb://localhost:27017' );
+/**
+ *
+ *
+ */
+async function run () {
+    await mongo_client.connect()
+        .then( ( cliet ) => {
+            console.log( 'db connected' );
+        } )
+        .catch( console.log );
+
+
+    const db = mongo_client.db( 'testing' );
+    const collection = db.collection( 'http' );
+
+    collection.insertOne( { header: { a: 1 }, body: { d: 3 } } )
+        .then( () => {
+            console.log( 'inserted temp data' );
+        } )
+        .catch( console.log );
+}
+
+run();
 
 export interface express_app_config {
     ip: string,
