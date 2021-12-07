@@ -22,7 +22,6 @@ describe( 'status integration tests', () => {
                 expect( res.body.data ).toEqual( 1 );
             } )
             .expect( StatusCodes.OK );
-        return 0;
     } );
 
     it( 'should get the error', async () => {
@@ -30,6 +29,5 @@ describe( 'status integration tests', () => {
             .get( '/some_random_unexisting_address' )
             .set( 'Reject', 'application/json' )
             .expect( StatusCodes.NOT_FOUND );
-        return 0;
     } );
 } );
