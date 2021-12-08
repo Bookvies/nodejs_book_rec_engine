@@ -3,6 +3,9 @@ import { global_logger, logger } from './logger';
 import { database, database_config } from './database';
 
 let server_config: server.express_app_config;
+let db_config: database_config;
+let db_client: database;
+let s: server.express_app;
 
 if ( process.env.ON_HEROKU ) {
     server_config = {
@@ -22,12 +25,12 @@ if ( process.env.ON_HEROKU ) {
  *
  */
 function init () {
-    const database_config: database_config = {
+    db_config = {
         address: 'mongodb://localhost:27017',
         db_name: 'testing',
     };
-    const db_client = new database(
-        database_config,
+    db_client = new database(
+        db_config,
         new logger(
             { debug: true,
                 info: true,
@@ -40,20 +43,38 @@ function init () {
         // for testing
         db_client.testing_inserion().then( async () => {
             console.log( 'For testing: should contain one element { a: 3 }:\n\t',
-                await db_client.testing_find(),
+                await db_client.testing_find().catch( ( err ) => {
+                    global_logger.error( err );
+                } ),
             );
-            await db_client.testing_delete();
+            await db_client.testing_delete().catch( ( err ) => {
+                global_logger.error( err );
+            } );
             console.log( 'For testing: should be empty:\n\t',
-                await db_client.testing_find(),
+                await db_client.testing_find().catch( ( err ) => {
+                    global_logger.error( err );
+                } ),
             );
+        } ).catch( ( err ) => {
+            global_logger.error( err );
         } );
+    } ).catch( ( err ) => {
+        global_logger.error( err );
     } );
 
 
     global_logger.info( 'Application started' );
-    const s = new server.express_app( server_config );
+    s = new server.express_app(
+        server_config,
+        new logger( {
+            debug: true,
+            info: true,
+            warn: true,
+            error: true,
+            prefix: 'SERVER',
+        } ) );
     s.init().listen( () => {
-        global_logger.info( `Application listening on: ${server_config}` );
+        global_logger.info( `Application listening on: ${JSON.stringify( server_config )}` );
     } );
 }
 

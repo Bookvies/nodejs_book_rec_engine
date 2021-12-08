@@ -1,4 +1,5 @@
 import * as express from 'express';
+import { logger } from '../../logger';
 import { express_app } from '../../server';
 
 /**
@@ -20,7 +21,13 @@ export default class IntegrationHelpers {
         if ( this.appInstance ) {
             return this.appInstance;
         }
-        const app: express_app = new express_app( { ip: '127.0.0.1', port: 3030 } );
+        const app: express_app = new express_app( { ip: '127.0.0.1', port: 3030 },
+            new logger( { debug: false,
+                info: false,
+                warn: false,
+                error: false,
+                prefix: 'INTEGRATION_SERVER',
+            } ) );
         app.init().listen();
         this.appInstance = app.app;
         return this.appInstance;

@@ -46,7 +46,9 @@ export class database {
 
                 this.logger.info( 'Client connected' );
             } )
-            .catch( this.logger.error );
+            .catch( ( err ) => {
+                this.logger.error( err );
+            } );
     }
 
 
@@ -83,6 +85,9 @@ export class database {
             } )
             .catch( () => {
                 this.logger.warn( 'Ping failed' );
+                this.mongo_client.close().catch( ( err ) => {
+                    this.logger.error( `Disconnect in ping error ${ err }` );
+                } );
                 this.connect();
             } );
     }

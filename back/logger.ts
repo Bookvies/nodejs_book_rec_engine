@@ -10,6 +10,10 @@ const pino = p.default( {
 } );
 const pino_http = p_http.default( {
     logger: pino,
+    useLevel: 'debug',
+    transport: {
+        target: 'pino-pretty',
+    },
 } );
 
 export interface logger_config {
@@ -77,14 +81,18 @@ export class logger {
 
 
     /**
-     * Log incoming http request
-     * Adds prefix to argument. Final message will be "PREFIX: ARG"
+     *   Log incoming http request
+     *   Adds prefix and msg to first message
+     *
      * @param {IncomingMessage} req
      * @param {ServerResponse} res
-     * @memberof logger
+     * @param {string} [msg]
      */
-    http ( req: IncomingMessage, res: ServerResponse ) {
-        pino_http( req, res );
+    http ( req: IncomingMessage, res: ServerResponse, msg?: string ) {
+        if ( this.config.debug ) {
+            pino_http( req, res );
+            ( req as any ).log.info( `${this.config.prefix}: ${msg === undefined ? '' : msg}` );
+        }
     }
 }
 

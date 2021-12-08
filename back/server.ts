@@ -1,5 +1,6 @@
 import * as express from 'express';
 import path from 'path';
+import { logger } from './logger';
 
 
 export interface express_app_config {
@@ -21,7 +22,10 @@ export class express_app {
      * Creates an instance of express_app.
      * @param {express_app_config} config
      */
-    constructor ( public config: express_app_config ) {
+    constructor (
+        public config: express_app_config,
+        public logger: logger,
+    ) {
         this.app = express.default();
     }
 
@@ -44,14 +48,8 @@ export class express_app {
      *
      */
     init_basic_get () {
-        this.app.get( '/', ( req, res ) => {
-            console.log( 'Got / get request' );
-            res.sendFile( path.join( __dirname, '../mkp/index.html' ) );
-            res.end();
-        } );
-
         this.app.get( '/dummy_test/one', ( req, res ) => {
-            console.log( 'Got / get request' );
+            this.logger.http( req, res );
             res.json( { data: 1 } );
             res.end();
         } );
