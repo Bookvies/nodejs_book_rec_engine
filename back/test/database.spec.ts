@@ -1,7 +1,7 @@
 import { database, database_config } from '../database';
 import { logger } from '../logger';
 
-describe( 'Dummy', () => {
+describe( 'Database basic', () => {
     const database_config: database_config = {
         address: 'mongodb://localhost:27017',
         db_name: 'database_spec',

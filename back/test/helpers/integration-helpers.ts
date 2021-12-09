@@ -1,6 +1,9 @@
-import * as express from 'express';
 import { logger } from '../../logger';
 import { express_app } from '../../server';
+
+export interface integration_helpers_config {
+    server_port?: number
+}
 
 /**
  *
@@ -8,28 +11,36 @@ import { express_app } from '../../server';
  * @export
  * @class IntegrationHelpers
  */
-export default class IntegrationHelpers {
-    public static appInstance: express.Application;
+export class integration_helpers {
+    public sever_instance?: express_app;
 
     /**
-     *
+     * Creates an instance of IntegrationHelpers.
+     */
+    constructor ( public config: integration_helpers_config ) {
+    }
+
+    /**
+     * server_port should be specified in config in order to be used
      *
      * @static
      * @return {*}  {Promise<express.Application>}
      */
-    public static async getApp (): Promise<express.Application> {
-        if ( this.appInstance ) {
-            return this.appInstance;
+    public async get_server (): Promise<express_app> {
+        if ( this.config.server_port == undefined ) {
+            throw new Error( 'get_server used but server_port not specified in config' );
         }
-        const app: express_app = new express_app( { ip: '127.0.0.1', port: 3030 },
+        if ( this.sever_instance ) {
+            return this.sever_instance;
+        }
+        this.sever_instance = new express_app( { ip: '127.0.0.1', port: this.config.server_port },
             new logger( { debug: false,
                 info: false,
                 warn: false,
                 error: false,
                 prefix: 'INTEGRATION_SERVER',
             } ) );
-        app.init().listen();
-        this.appInstance = app.app;
-        return this.appInstance;
+        await this.sever_instance.init().listen();
+        return this.sever_instance;
     }
 }
