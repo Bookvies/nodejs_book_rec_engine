@@ -129,7 +129,7 @@ export class express_app {
      *
      */
     init_basic_get () {
-        this.on( 'get', '/dummy_test/one', async ( req, res, extra_data ) => {
+        this.on( 'get', '/dummy_test/one', async ( req, res ) => {
             this.logger.http( req, res );
             res.json( { data: 1 } );
             res.status( StatusCodes.OK );

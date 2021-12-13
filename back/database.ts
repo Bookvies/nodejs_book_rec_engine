@@ -1,6 +1,11 @@
 import * as mongodb from 'mongodb';
 import { logger } from './logger';
 
+export enum DATABASE_ERROR_CODES {
+    ALREADY_PRESENT,
+    NOT_FOUND
+}
+
 export interface database_config {
     address: string,
     db_name: string
@@ -39,7 +44,7 @@ export class database {
             this.ping_timeout = setTimeout( this.ping.bind( this ), 1000 );
         }
         await this.mongo_client.connect()
-            .then( ( cliet ) => {
+            .then( ( ) => {
                 this.db = this.mongo_client.db( this.config.db_name );
 
                 this.user_collection = this.db.collection( 'user' );
@@ -90,6 +95,43 @@ export class database {
                 } );
                 this.connect();
             } );
+    }
+
+    /**
+     * !!! TO BE IMPLEMENTED
+     * Returns username and passwd hash if username in database,
+     * throws error NOT_FOUND from enumotherwise
+     *
+     * Probably should check if db inited before req.
+     * In case of db error... dunno. Throws error as well
+     *
+     * @param {string} username
+     * @return {*}  {{ username: string, passwd_hash: strig }}
+     */
+    async retrieve_user_passwd ( username: string ):
+    Promise<{ username: string; passwd_hash: any; }> {
+        throw DATABASE_ERROR_CODES.NOT_FOUND;
+        // to silence may be unused
+        return { username: username, passwd_hash: 'PLACEHOLDER' };
+    }
+
+
+    /**
+     * Adds password hash for a user
+     * If user already in database, throws
+     * ALREADY_PRESENT enum;
+     *
+     * Probably should check if db inited before req.
+     * In case of db error... dunno. Throws error as well
+     *
+     * @param {string} username
+     * @param {string} passwd_hash
+     * @return {*}  {Promise<void>}
+     */
+    async add_passwd_for_user ( username: string, passwd_hash: string ): Promise<void> {
+        throw DATABASE_ERROR_CODES.ALREADY_PRESENT;
+        // to silence may be unused
+        username; passwd_hash;
     }
 
     /**
