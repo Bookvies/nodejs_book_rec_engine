@@ -45,7 +45,7 @@ describe( 'server events', () => {
                         .set( 'Accept', 'application/json' )
                         .expect( StatusCodes.NOT_FOUND )
                         .then( () => {
-                            server.on( method, random_addr_1, async ( req, res, extra_data ) => {
+                            server.on( method, random_addr_1, async ( req, res ) => {
                                 res.json( { data: method, iter: i } );
                                 res.status( StatusCodes.OK );
                                 res.end();
@@ -92,7 +92,7 @@ describe( 'server events', () => {
                     break;
                 }
 
-                server.on( method, random_addr_2, async ( req, res, extra_data ) => {
+                server.on( method, random_addr_2, async ( ) => {
                     throw new Error( `${method}` );
                 } );
 
