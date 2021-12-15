@@ -26,8 +26,8 @@ export class auth_module {
     /**
      * Creates an instance of auth_server.
      */
-    constructor ( public logger: logger,
-            private database: database ) {
+    constructor ( private database: database,
+            public logger: logger ) {
         this.ttl_iteration_timeout = setTimeout( () => {
             this.ttl_iteration();
         }, 1000 );
@@ -61,10 +61,13 @@ export class auth_module {
      * Returns username if user with such cookie logged in
      * Undefined otherwise
      *
-     * @param {string} cookie
+     * @param {string} [cookie]
      * @return { string | undefined }
      */
-    get_username_by_cookie ( cookie: string ): string | undefined {
+    get_username_by_cookie ( cookie?: string ): string | undefined {
+        if ( cookie == undefined ) {
+            return undefined;
+        }
         if ( cookie in this.active_users ) {
             return this.active_users[cookie].username;
         }

@@ -1,6 +1,7 @@
 import * as server from './server';
 import { global_logger, logger } from './logger';
 import { database, database_config } from './database';
+import { auth_module } from './authentication';
 
 let server_config: server.express_app_config;
 let db_config: database_config;
@@ -62,6 +63,15 @@ function init () {
         global_logger.error( err );
     } );
 
+    const auth = new auth_module(
+        db_client,
+        new logger( {
+            debug: true,
+            info: true,
+            warn: true,
+            error: true,
+            prefix: 'AUTH_MODULE',
+        } ) );
 
     global_logger.info( 'Application started' );
     s = new server.express_app(
@@ -72,7 +82,9 @@ function init () {
             warn: true,
             error: true,
             prefix: 'SERVER',
-        } ) );
+        } ),
+        auth,
+    );
     s.init().listen( () => {
         global_logger.info( `Application listening on: ${JSON.stringify( server_config )}` );
     } );

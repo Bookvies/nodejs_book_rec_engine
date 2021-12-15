@@ -6,6 +6,7 @@ import { logger } from './logger';
 import {
     StatusCodes,
 } from 'http-status-codes';
+import { auth_module } from './authentication';
 
 export interface express_app_config {
     ip: string,
@@ -13,7 +14,7 @@ export interface express_app_config {
 }
 
 export interface http_request_extra_data {
-
+    current_username?: string
 }
 
 type http_method_callback = (
@@ -48,6 +49,7 @@ export class express_app {
     constructor (
         public config: express_app_config,
         public logger: logger,
+        private auth?: auth_module,
     ) {
         this.app = express.default();
     }
@@ -77,8 +79,11 @@ export class express_app {
     private init_http_methods () {
         this.app.get( '*', async ( req, res ) => {
             this.logger.http( req, res );
+            const extra_data: http_request_extra_data = {
+                current_username: this.auth?.get_username_by_cookie( req.headers.cookie ),
+            };
             if ( this.callbacks.get[req.url] ) {
-                this.callbacks.get[req.url]( req, res, {} )
+                await this.callbacks.get[req.url]( req, res, extra_data )
                     .catch( ( err ) => {
                         res.status( StatusCodes.INTERNAL_SERVER_ERROR );
                         res.json( { error: err } );
@@ -93,8 +98,11 @@ export class express_app {
 
         this.app.post( '*', async ( req, res ) => {
             this.logger.http( req, res );
+            const extra_data: http_request_extra_data = {
+                current_username: this.auth?.get_username_by_cookie( req.headers.cookie ),
+            };
             if ( this.callbacks.post[req.url] ) {
-                this.callbacks.post[req.url]( req, res, {} )
+                await this.callbacks.post[req.url]( req, res, extra_data )
                     .catch( ( err ) => {
                         res.status( StatusCodes.INTERNAL_SERVER_ERROR );
                         res.json( { error: err } );
@@ -109,8 +117,11 @@ export class express_app {
 
         this.app.put( '*', async ( req, res ) => {
             this.logger.http( req, res );
+            const extra_data: http_request_extra_data = {
+                current_username: this.auth?.get_username_by_cookie( req.headers.cookie ),
+            };
             if ( this.callbacks.put[req.url] ) {
-                this.callbacks.put[req.url]( req, res, {} )
+                await this.callbacks.put[req.url]( req, res, extra_data )
                     .catch( ( err ) => {
                         res.status( StatusCodes.INTERNAL_SERVER_ERROR );
                         res.json( { error: err } );

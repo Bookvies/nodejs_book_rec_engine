@@ -6,3 +6,29 @@ Extra data will be provided by request handler. It will contains somethig like i
 
 This file will contain api common bentween different pages
 */
+
+export interface any_object {
+    [key: string]: any,
+}
+
+
+/**
+ *
+ *
+ * @export
+ * @param {any_object} object
+ * @param {Array<string>} fields_to_check
+ * @return {*}  {{ ok: boolean, missing: string }}
+ */
+export function object_field_checker (
+    object: any_object,
+    fields_to_check: Array<string>,
+) : { ok: boolean, missing: string } {
+    for ( const field of fields_to_check ) {
+        if ( !( field in object ) ) {
+            return { ok: false, missing: field };
+        }
+    }
+
+    return { ok: true, missing: '' };
+}
