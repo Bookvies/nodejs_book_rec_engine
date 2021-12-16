@@ -40,28 +40,10 @@ function init () {
                 prefix: 'DB',
             } ) );
 
-    db_client.connect().then( () => {
-        // for testing
-        db_client.testing_inserion().then( async () => {
-            console.log( 'For testing: should contain one element { a: 3 }:\n\t',
-                await db_client.testing_find().catch( ( err ) => {
-                    global_logger.error( err );
-                } ),
-            );
-            await db_client.testing_delete().catch( ( err ) => {
-                global_logger.error( err );
-            } );
-            console.log( 'For testing: should be empty:\n\t',
-                await db_client.testing_find().catch( ( err ) => {
-                    global_logger.error( err );
-                } ),
-            );
-        } ).catch( ( err ) => {
+    db_client.connect()
+        .catch( ( err ) => {
             global_logger.error( err );
         } );
-    } ).catch( ( err ) => {
-        global_logger.error( err );
-    } );
 
     const auth = new auth_module(
         db_client,

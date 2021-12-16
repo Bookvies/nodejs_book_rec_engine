@@ -157,6 +157,9 @@ export class auth_module {
                 return { succ: true, description: 'Registration successful' };
             } )
             .catch( ( e ) => {
+                if ( e == DATABASE_ERROR_CODES.ALREADY_PRESENT ) {
+                    return { succ: false, description: 'Username already taken' };
+                }
                 throw e;
             } );
     }

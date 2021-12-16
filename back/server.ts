@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as session from 'express-session';
 import { Request, Response } from 'express-serve-static-core';
 import { ParsedQs } from 'qs';
 import path from 'path';
@@ -60,7 +61,18 @@ export class express_app {
      * @return {*}  {express_app}
      */
     init (): express_app {
-        this.app.use( express.json() );
+        this.app.use(
+            session.default( {
+                secret: 'test',
+                resave: false,
+                saveUninitialized: true,
+                cookie: {
+                    secure: false,
+                    sameSite: 'strict',
+                    maxAge: 3600 * 1000,
+                },
+            } ),
+        );
         this.app.use( express.static( path.join( __dirname, '../mkp' ) ) );
 
         this.init_http_methods();

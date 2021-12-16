@@ -1,0 +1,18 @@
+GET /auth/get_username
+Returns 200 and { username: string } for current cookie if user is logged in
+Returns 200 and { username: undefined } for current cookie if user is not logged in
+
+POST /auth/register
+Returns 400 and { error: string } if one of the fields ['password_hash', 'username'] missing from the body
+Returns 400 and { error: string } if header does not contain a cookie
+Returns 201 and { username: string } if registration is successful
+Returns 401 and { error: string } if registration failed ( username not valid or smth like that )
+Returns 500 and { error: string } if adding user caused server error
+
+POST /auth/login
+Returns 400 and { error: string } if one of the fields ['password_hash', 'username'] missing from the body
+Returns 400 and { error: string } if header does not contain a cookie
+Returns 200 and { username: string } if login is successful
+Returns 401 and { error: string } if login failed ( password and username doesnt match smth like that )
+Returns 500 and { error: string } if login caused server error
+

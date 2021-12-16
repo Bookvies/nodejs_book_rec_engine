@@ -32,7 +32,7 @@ export class database {
         private config: database_config,
         public logger: logger,
     ) {
-        this.mongo_client = new mongodb.MongoClient( 'mongodb://localhost:27017' );
+        this.mongo_client = new mongodb.MongoClient( config.address );
     }
 
     /**

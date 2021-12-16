@@ -1,28 +1,16 @@
-import { database, database_config } from '../database';
-import { logger } from '../logger';
+import { database } from '../database';
+import { integration_helpers } from './helpers/integration-helpers';
 
 describe( 'Database basic', () => {
-    const database_config: database_config = {
-        address: 'mongodb://localhost:27017',
+    const ih = new integration_helpers( {
         db_name: 'database_spec',
-    };
-    const db_client = new database(
-        database_config,
-        new logger(
-            { debug: false,
-                info: false,
-                warn: false,
-                error: false,
-                prefix: 'DB',
-            } ) );
+    } );
+    let db_client: database;
 
-    beforeAll( ( done ) => {
-        db_client.connect()
-            .then( () => {
-                done();
-            } ).catch( ( err ) => {
-                done.fail( `Before all: connection failed \n${err}` );
-            } );
+
+    beforeAll( async () => {
+        db_client = await ih.get_database();
+        await db_client.connect();
     } );
 
     afterAll( ( done ) => {

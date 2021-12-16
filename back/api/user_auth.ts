@@ -7,6 +7,7 @@ import { object_field_checker } from './helpers';
 // NOT YET FINISHED
 // REQUIERS TESTS
 
+
 /**
  *
  *
@@ -16,6 +17,7 @@ import { object_field_checker } from './helpers';
 export class auth_page {
     /**
      * Creates an instance of auth_page.
+     * @param {auth_module} auth
      * @param {logger} logger
      */
     constructor ( private auth: auth_module,
@@ -35,8 +37,7 @@ export class auth_page {
             res.end();
         } );
 
-        // requiers docs
-        server.on( 'get', '/auth/register', async ( req, res ) => {
+        server.on( 'post', '/auth/register', async ( req, res ) => {
             const obj_matchg = object_field_checker( req.body, ['password_hash', 'username'] );
             if ( !obj_matchg.ok ) {
                 res.status( StatusCodes.BAD_REQUEST );
@@ -61,6 +62,52 @@ export class auth_page {
                             username: this.auth.get_username_by_cookie( req.headers.cookie ),
                         } );
                         res.status( StatusCodes.CREATED );
+                        res.end();
+                        return;
+                    } else {
+                        res.json( {
+                            reason: val.description,
+                        } );
+                        res.status( StatusCodes.UNAUTHORIZED );
+                        res.end();
+                        return;
+                    }
+                } )
+                .catch( ( err ) => {
+                    res.status( StatusCodes.INTERNAL_SERVER_ERROR );
+                    res.json( {
+                        error: err,
+                    } );
+                    res.end();
+                    return;
+                } );
+        } );
+
+        server.on( 'post', '/auth/login', async ( req, res ) => {
+            const obj_matchg = object_field_checker( req.body, ['password_hash', 'username'] );
+            if ( !obj_matchg.ok ) {
+                res.status( StatusCodes.BAD_REQUEST );
+                res.json( {
+                    error: `Expected both ${obj_matchg.missing} in the request body`,
+                } );
+                res.end();
+                return;
+            }
+            if ( req.headers.cookie == undefined ) {
+                res.status( StatusCodes.BAD_REQUEST );
+                res.json( {
+                    error: 'Cookie is undefined',
+                } );
+                res.end();
+                return;
+            }
+            this.auth.login( req.headers.cookie, req.body.username, req.body.passwd_hash )
+                .then( ( val ) => {
+                    if ( val.succ ) {
+                        res.json( {
+                            username: this.auth.get_username_by_cookie( req.headers.cookie ),
+                        } );
+                        res.status( StatusCodes.OK );
                         res.end();
                         return;
                     } else {
