@@ -3,6 +3,7 @@ import { global_logger, logger } from './logger';
 import { database, database_config } from './database';
 import { auth_module } from './authentication';
 
+
 let server_config: server.express_app_config;
 let db_config: database_config;
 let db_client: database;
@@ -27,7 +28,8 @@ if ( process.env.ON_HEROKU ) {
  */
 function init () {
     db_config = {
-        address: 'mongodb://localhost:27017',
+        address: 'mongodb://root:example@127.0.0.1:27017/',
+        // address: 'mongodb://localhost:27017',
         db_name: 'testing',
     };
     db_client = new database(

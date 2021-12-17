@@ -110,12 +110,12 @@ export class auth_module {
                     return { succ: false, description: 'Login or password dosen\'t match' };
                 }
             } )
-            .catch( ( e ) => {
-                if ( e == DATABASE_ERROR_CODES.NOT_FOUND ) {
+            .catch( ( err ) => {
+                if ( err.code == DATABASE_ERROR_CODES.NOT_FOUND && err.origin == 'database' ) {
                     return { succ: false, description: 'No such user found' };
                     // Or should it be login\passwd doesnt match?
                 } else {
-                    throw e;
+                    throw err;
                 }
             } );
     }
@@ -156,11 +156,11 @@ export class auth_module {
             .then( ( ) => {
                 return { succ: true, description: 'Registration successful' };
             } )
-            .catch( ( e ) => {
-                if ( e == DATABASE_ERROR_CODES.ALREADY_PRESENT ) {
+            .catch( ( err ) => {
+                if ( err.code == DATABASE_ERROR_CODES.NOT_FOUND && err.origin == 'database' ) {
                     return { succ: false, description: 'Username already taken' };
                 }
-                throw e;
+                throw err;
             } );
     }
 
