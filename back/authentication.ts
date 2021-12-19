@@ -1,6 +1,11 @@
 import { database, DATABASE_ERROR_CODES } from './database';
 import { logger } from './logger';
 
+export interface auth_module_config {
+    MS_PER_TTL_TICK: number,
+    NEW_TTL_ON_ACTION: number,
+    NEW_TTL_ON_LOGIN: number,
+}
 
 /**
  * NOT YET TESTED OR USED
@@ -17,20 +22,18 @@ import { logger } from './logger';
 export class auth_module {
     private active_users: { [ cookie: string ]: { username: string, ttl: number } } = {};
 
-    MS_PER_TTL_TICK = 1000;
-    NEW_TTL_ON_ACTION = 3600;
-    NEW_TTL_ON_LOGIN = 3600;
-
     ttl_iteration_timeout: NodeJS.Timeout;
 
     /**
      * Creates an instance of auth_server.
      */
-    constructor ( private database: database,
+    constructor (
+            public config:auth_module_config,
+            private database: database,
             public logger: logger ) {
         this.ttl_iteration_timeout = setTimeout( () => {
             this.ttl_iteration();
-        }, 1000 );
+        }, this.config.MS_PER_TTL_TICK );
     }
 
     /**
@@ -54,7 +57,7 @@ export class auth_module {
         clearTimeout( this.ttl_iteration_timeout );
         this.ttl_iteration_timeout = setTimeout( () => {
             this.ttl_iteration();
-        }, this.MS_PER_TTL_TICK );
+        }, this.config.MS_PER_TTL_TICK );
     }
 
     /**
@@ -79,19 +82,20 @@ export class auth_module {
      * Checks if username is valid.
      * Should contain [3, 16] symbols.
      * First symbol is a-z | A-Z
-     * Others a-z | A-Z | 0-9
+     * Others a-z | A-Z | 0-9 | _
      *
      * @param {string} username
      * @return {*} boolean
      */
     is_username_valid ( username: string ): boolean {
-        const regex = /[a-zA-Z]([a-zA-Z0-9]{2,15})/;
+        const regex = /^[a-zA-Z]([a-zA-Z0-9_]{2,15})$/;
         return regex.test( username );
     }
 
     /**
      * Checks if username in db and passwd_hash match
      * Loggs in if all checks passed
+     * Remebers user if succ
      *
      * Throws errors originated in db
      *
@@ -128,9 +132,7 @@ export class auth_module {
      * @param {string} username
      */
     exit ( cookie: string ) {
-        if ( this.get_username_by_cookie( cookie ) == undefined ) {
-            throw new Error( 'User not logged in' );
-        } else {
+        if ( this.get_username_by_cookie( cookie ) != undefined ) {
             this.forget_user( cookie );
         }
     }
@@ -154,10 +156,12 @@ export class auth_module {
         }
         return await this.database.add_passwd_for_user( username, passwd_hash )
             .then( ( ) => {
+                this.remember_user( cookie, username, 'Login successful' );
                 return { succ: true, description: 'Registration successful' };
             } )
             .catch( ( err ) => {
-                if ( err.code == DATABASE_ERROR_CODES.NOT_FOUND && err.origin == 'database' ) {
+                if ( err.code == DATABASE_ERROR_CODES.ALREADY_PRESENT &&
+                     err.origin == 'database' ) {
                     return { succ: false, description: 'Username already taken' };
                 }
                 throw err;
@@ -185,8 +189,8 @@ export class auth_module {
      */
     private update_ttl ( cookie: string, reason?: string ) {
         if ( cookie in this.active_users ) {
-            const new_ttl = this.active_users[cookie].ttl > this.NEW_TTL_ON_ACTION ?
-                this.active_users[cookie].ttl : this.NEW_TTL_ON_ACTION;
+            const new_ttl = this.active_users[cookie].ttl > this.config.NEW_TTL_ON_ACTION ?
+                this.active_users[cookie].ttl : this.config.NEW_TTL_ON_ACTION;
             this.logger.debug(
                 `Updated ttl for a user "${this.active_users[cookie]?.username}" from ${
                     this.active_users[cookie]?.ttl} to ${new_ttl} was removed ${reason ==
@@ -231,17 +235,17 @@ export class auth_module {
         if ( !( cookie in this.active_users ) ) {
             this.logger.info( `ADDED User "${
                 this.active_users[cookie]?.username}" with TTL ${
-                this.NEW_TTL_ON_ACTION} ${reason == undefined ? 'without reason' :
+                this.config.NEW_TTL_ON_ACTION} ${reason == undefined ? 'without reason' :
                 `because "${reason}"`}. Cookie: ${cookie}` );
 
-            this.active_users[cookie] = { username: username, ttl: this.NEW_TTL_ON_LOGIN };
+            this.active_users[cookie] = { username: username, ttl: this.config.NEW_TTL_ON_LOGIN };
         } else {
             this.logger.warn( `REPLACED User "${
                 this.active_users[cookie]?.username}" with TTL ${
-                this.NEW_TTL_ON_ACTION} ${reason == undefined ? 'without reason' :
+                this.config.NEW_TTL_ON_ACTION} ${reason == undefined ? 'without reason' :
                 `because "${reason}"`}. Cookie: ${cookie}` );
 
-            this.active_users[cookie] = { username: username, ttl: this.NEW_TTL_ON_LOGIN };
+            this.active_users[cookie] = { username: username, ttl: this.config.NEW_TTL_ON_LOGIN };
         }
     }
 }

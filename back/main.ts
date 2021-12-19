@@ -1,7 +1,7 @@
 import * as server from './server';
 import { global_logger, logger } from './logger';
 import { database, database_config } from './database';
-import { auth_module } from './authentication';
+import { auth_module, auth_module_config } from './authentication';
 
 
 let server_config: server.express_app_config;
@@ -47,7 +47,13 @@ function init () {
             global_logger.error( err );
         } );
 
+    const auth_config: auth_module_config = {
+        MS_PER_TTL_TICK: 1000,
+        NEW_TTL_ON_ACTION: 3600,
+        NEW_TTL_ON_LOGIN: 3600,
+    };
     const auth = new auth_module(
+        auth_config,
         db_client,
         new logger( {
             debug: true,
