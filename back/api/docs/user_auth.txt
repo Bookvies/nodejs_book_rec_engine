@@ -16,3 +16,8 @@ Returns 200 and { username: string } if login is successful
 Returns 401 and { error: string } if login failed ( password and username doesnt match smth like that )
 Returns 500 and { error: string } if login caused server error
 
+POST /auth/exit
+Returns 400 and { error: string } if header does not contain a cookie
+Returns 200 if exit is successful
+Returns 401 and { error: string } if exit failed ( user wasnt logged in )
+Returns 500 and { error: string } if exit caused server error

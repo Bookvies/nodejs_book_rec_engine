@@ -32,8 +32,8 @@ export class auth_page {
      */
     hook_def ( server: express_app ) {
         server.on( 'get', '/auth/get_username', async ( req, res, extra_data ) => {
-            res.json( { username: extra_data.current_username } );
             res.status( StatusCodes.OK );
+            res.json( { username: extra_data.current_username } );
             res.end();
         } );
 
@@ -42,7 +42,7 @@ export class auth_page {
             if ( !obj_matchg.ok ) {
                 res.status( StatusCodes.BAD_REQUEST );
                 res.json( {
-                    error: `Expected both ${obj_matchg.missing} in the request body`,
+                    error: `Expected ${obj_matchg.missing} in the request body`,
                 } );
                 res.end();
                 return;
@@ -55,20 +55,21 @@ export class auth_page {
                 res.end();
                 return;
             }
-            this.auth.register( req.headers.cookie, req.body.username, req.body.password_hash )
+            await this.auth.register(
+                req.headers.cookie, req.body.username, req.body.password_hash )
                 .then( ( val ) => {
                     if ( val.succ ) {
+                        res.status( StatusCodes.CREATED );
                         res.json( {
                             username: this.auth.get_username_by_cookie( req.headers.cookie ),
                         } );
-                        res.status( StatusCodes.CREATED );
                         res.end();
                         return;
                     } else {
+                        res.status( StatusCodes.UNAUTHORIZED );
                         res.json( {
                             reason: val.description,
                         } );
-                        res.status( StatusCodes.UNAUTHORIZED );
                         res.end();
                         return;
                     }
@@ -88,7 +89,7 @@ export class auth_page {
             if ( !obj_matchg.ok ) {
                 res.status( StatusCodes.BAD_REQUEST );
                 res.json( {
-                    error: `Expected both ${obj_matchg.missing} in the request body`,
+                    error: `Expected ${obj_matchg.missing} in the request body`,
                 } );
                 res.end();
                 return;
@@ -101,20 +102,20 @@ export class auth_page {
                 res.end();
                 return;
             }
-            this.auth.login( req.headers.cookie, req.body.username, req.body.passwd_hash )
+            await this.auth.login( req.headers.cookie, req.body.username, req.body.password_hash )
                 .then( ( val ) => {
                     if ( val.succ ) {
+                        res.status( StatusCodes.OK );
                         res.json( {
                             username: this.auth.get_username_by_cookie( req.headers.cookie ),
                         } );
-                        res.status( StatusCodes.OK );
                         res.end();
                         return;
                     } else {
+                        res.status( StatusCodes.UNAUTHORIZED );
                         res.json( {
                             reason: val.description,
                         } );
-                        res.status( StatusCodes.UNAUTHORIZED );
                         res.end();
                         return;
                     }
@@ -127,6 +128,30 @@ export class auth_page {
                     res.end();
                     return;
                 } );
+        } );
+
+        server.on( 'post', '/auth/exit', async ( req, res ) => {
+            if ( req.headers.cookie == undefined ) {
+                res.status( StatusCodes.BAD_REQUEST );
+                res.json( {
+                    error: 'Cookie is undefined',
+                } );
+                res.end();
+                return;
+            }
+            const result = this.auth.exit( req.headers.cookie );
+            if ( result.succ == true ) {
+                res.status( StatusCodes.OK );
+                res.end();
+                return;
+            } else {
+                res.status( StatusCodes.UNAUTHORIZED );
+                res.json( {
+                    error: result.description,
+                } );
+                res.end();
+                return;
+            }
         } );
     }
 }

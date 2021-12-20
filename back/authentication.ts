@@ -124,16 +124,24 @@ export class auth_module {
             } );
     }
 
+
     /**
-     * Removes user from active_users
-     * Throws error if user not logged in
+     * Removes cookie from active users
+     * If succ true, operation was successful
      *
      * @param {string} cookie
-     * @param {string} username
+     * @return {*}  {{ succ: boolean, description: string }}
      */
-    exit ( cookie: string ) {
+    exit ( cookie: string ): { succ: boolean, description: string } {
         if ( this.get_username_by_cookie( cookie ) != undefined ) {
             this.forget_user( cookie );
+            if ( this.get_username_by_cookie( cookie ) == undefined ) {
+                return { succ: true, description: 'Exit successful' };
+            } else {
+                return { succ: false, description: 'User active after forget... Magic?' };
+            }
+        } else {
+            return { succ: false, description: 'User is not active' };
         }
     }
 

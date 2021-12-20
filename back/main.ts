@@ -27,11 +27,19 @@ if ( process.env.ON_HEROKU ) {
  *
  */
 function init () {
-    db_config = {
-        // address: 'mongodb://root:example@127.0.0.1:27017/',
-        address: 'mongodb://localhost:27017',
-        db_name: 'testing',
-    };
+    if ( process.env.ON_HEROKU ) {
+        db_config = {
+            // eslint-disable-next-line max-len
+            address: 'mongodb+srv://heroku:heroku@cluster0.pd05q.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+            db_name: 'heroku',
+        };
+    } else {
+        db_config = {
+            address: 'mongodb://root:example@127.0.0.1:27017/',
+            // address: 'mongodb://localhost:27017',
+            db_name: 'testing',
+        };
+    }
     db_client = new database(
         db_config,
         new logger(

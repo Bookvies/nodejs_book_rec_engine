@@ -29,7 +29,6 @@ describe( 'Auth', () => {
                 error: false,
                 prefix: 'AUTH_SPEC',
             } ) );
-        auth;
     } );
 
     it( 'should register without error 1', async () => {
@@ -195,7 +194,7 @@ describe( 'Auth', () => {
     it( 'should exit properly 11', async ( ) => {
         const ti = 11;
         await auth.register( `c${ti}_0`, `a${ti}_0`, `p${ti}_0` );
-        auth.exit( `c${ti}_0` );
+        expect( auth.exit( `c${ti}_0` ).succ ).toBeTruthy();
         expect( auth.get_username_by_cookie( `c${ti}_0` ) ).toBeFalsy();
     } );
 
@@ -222,5 +221,10 @@ describe( 'Auth', () => {
             .then( ( val ) => {
                 expect( val.succ ).toBeFalsy();
             } );
+    } );
+
+    it( 'should not exit if inactive 15', async ( ) => {
+        const ti = 15;
+        expect( auth.exit( `c${ti}_0` ).succ ).toBeFalsy();
     } );
 } );
