@@ -4,12 +4,10 @@ import { logger } from '../logger';
 import { express_app } from '../server';
 import { object_field_checker } from './helpers';
 
-// NOT YET FINISHED
-// REQUIERS TESTS
-
-
 /**
- *
+ * Provides http api for metods of auth module.
+ * They are responisble for login, regitratiion and keeping track
+ * of active users.
  *
  * @export
  * @class auth_page

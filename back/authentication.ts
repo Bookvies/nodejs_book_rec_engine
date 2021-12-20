@@ -8,9 +8,6 @@ export interface auth_module_config {
 }
 
 /**
- * NOT YET TESTED OR USED
- * AWAITING DATABASE METHOD IMPLEMENTATION
- *
  * Module to keep track of registration and logging in.
  * Stores user data in database
  * Constantly stores active users in objects, updates their ttl and
@@ -95,7 +92,7 @@ export class auth_module {
     /**
      * Checks if username in db and passwd_hash match
      * Loggs in if all checks passed
-     * Remebers user if succ
+     * If succ true, operation was successful
      *
      * Throws errors originated in db
      *
@@ -148,6 +145,7 @@ export class auth_module {
 
     /**
      * Registers user. If all check passed, adds to database and loggs in
+     * If succ true, operation was successful
      *
      * Throws errors originated in db
      *
@@ -178,7 +176,7 @@ export class auth_module {
 
 
     /**
-     * Updates ttl to keep activve user active
+     * If user is active, updates ttl for him
      *
      * @param {string} cookie
      * @param {string} [reason]
