@@ -2,6 +2,7 @@ import * as server from './server';
 import { global_logger, logger } from './logger';
 import { database, database_config } from './database';
 import { auth_module, auth_module_config } from './authentication';
+import { auth_page } from './api/user_auth';
 
 
 let server_config: server.express_app_config;
@@ -83,6 +84,18 @@ function init () {
         } ),
         auth,
     );
+
+    const auth_api = new auth_page(
+        auth,
+        new logger( {
+            debug: true,
+            info: true,
+            warn: true,
+            error: true,
+            prefix: 'AUTH_API',
+        } ),
+    );
+    auth_api.hook_def( s );
     s.init().listen( () => {
         global_logger.info( `Application listening on: ${JSON.stringify( server_config )}` );
     } );
