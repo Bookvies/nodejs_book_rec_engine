@@ -9,12 +9,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateUniversalLoaderService } from './translate-universal-loader.service';
 import { FormsModule } from '@angular/forms';
+import { NotificationComponent } from './notification/notification.component';
 
 
 @NgModule( {
     declarations: [
         AppComponent,
         BaseComponent,
+        NotificationComponent,
     ],
     imports: [
         BrowserModule,

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { HttpServiceService } from '../http-service.service';
 
 
 @Component( {
@@ -19,7 +20,8 @@ export class BaseComponent implements OnInit {
      * Creates an instance of BaseComponent.
      * @param {TranslateService} translate
      */
-    constructor ( private translate: TranslateService ) {
+    constructor ( private translate: TranslateService,
+        private http: HttpServiceService ) {
 
     }
 
@@ -37,12 +39,5 @@ export class BaseComponent implements OnInit {
      */
     change_locale () {
         this.translate.use( this.translate.currentLang == 'en' ? 'ru' : 'en' );
-        const xmh = new XMLHttpRequest();
-        xmh.withCredentials = true;
-        xmh.onload = function () {
-            console.log( 'sent' );
-        };
-        xmh.open( 'GET', '/server', true );
-        xmh.send();
     }
 }
