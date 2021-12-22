@@ -1,0 +1,17 @@
+.login_window {
+    width: 50%;
+    margin: 0;
+    position: absolute;
+    top: 33%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.login_input {
+    width: 70%;
+}
+
+.login_button {
+    width: 33%;
+}

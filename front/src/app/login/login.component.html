@@ -1,0 +1,20 @@
+<div class="container mt-7 login_window">
+    <article class="message">
+        <div class="message-header">
+        <p>Log in</p>
+        </div>
+        <div *ngIf="result != ''" class="notification is-danger is-light" [innerHTML]="result"></div>
+        <div class="pl-3 pr-3 pb-4 has-text-centered">
+            <div class="is-size-4 pt-1">
+                Username
+            </div>
+            <input class="input is-primary login_input" type="text" placeholder="Alice" [(ngModel)]="username">
+            <div class="is-size-4 pt-1">
+                Password
+            </div>
+            <input class="input is-primary login_input" type="password" placeholder="*****" [(ngModel)]="password">
+            <br>
+            <button class="button is-primary mt-2 login_button" (click)="send()">Send</button>
+        </div>
+    </article>
+</div>

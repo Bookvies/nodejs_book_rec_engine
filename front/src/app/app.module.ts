@@ -11,6 +11,8 @@ import { TranslateUniversalLoaderService } from './translate-universal-loader.se
 import { FormsModule } from '@angular/forms';
 import { NotificationComponent } from './notification/notification.component';
 import { HttpServiceService } from './http-service.service';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 
 @NgModule( {
@@ -18,6 +20,8 @@ import { HttpServiceService } from './http-service.service';
         AppComponent,
         BaseComponent,
         NotificationComponent,
+        LoginComponent,
+        RegisterComponent,
     ],
     imports: [
         BrowserModule,
