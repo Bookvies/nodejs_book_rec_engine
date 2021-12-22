@@ -10,6 +10,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateUniversalLoaderService } from './translate-universal-loader.service';
 import { FormsModule } from '@angular/forms';
 import { NotificationComponent } from './notification/notification.component';
+import { HttpServiceService } from './http-service.service';
 
 
 @NgModule( {
@@ -30,7 +31,7 @@ import { NotificationComponent } from './notification/notification.component';
             },
         } ),
     ],
-    providers: [],
+    providers: [HttpServiceService],
     bootstrap: [AppComponent],
 } )
 // eslint-disable-next-line require-jsdoc
