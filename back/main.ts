@@ -1,7 +1,8 @@
 import * as server from './server';
 import { global_logger, logger } from './logger';
 import { database, database_config } from './database';
-import { auth_module } from './authentication';
+import { auth_module, auth_module_config } from './authentication';
+import { auth_page } from './api/user_auth';
 
 
 let server_config: server.express_app_config;
@@ -27,11 +28,19 @@ if ( process.env.ON_HEROKU ) {
  *
  */
 function init () {
-    db_config = {
-        // address: 'mongodb://root:example@127.0.0.1:27017/',
-        address: 'mongodb://localhost:27017',
-        db_name: 'testing',
-    };
+    if ( process.env.ON_HEROKU ) {
+        db_config = {
+            // eslint-disable-next-line max-len
+            address: 'mongodb+srv://heroku:heroku@cluster0.pd05q.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+            db_name: 'heroku',
+        };
+    } else {
+        db_config = {
+            // address: 'mongodb://root:example@127.0.0.1:27017/',
+            address: 'mongodb://localhost:27017',
+            db_name: 'testing',
+        };
+    }
     db_client = new database(
         db_config,
         new logger(
@@ -47,7 +56,13 @@ function init () {
             global_logger.error( err );
         } );
 
+    const auth_config: auth_module_config = {
+        MS_PER_TTL_TICK: 1000,
+        NEW_TTL_ON_ACTION: 3600,
+        NEW_TTL_ON_LOGIN: 3600,
+    };
     const auth = new auth_module(
+        auth_config,
         db_client,
         new logger( {
             debug: true,
@@ -69,6 +84,18 @@ function init () {
         } ),
         auth,
     );
+
+    const auth_api = new auth_page(
+        auth,
+        new logger( {
+            debug: true,
+            info: true,
+            warn: true,
+            error: true,
+            prefix: 'AUTH_API',
+        } ),
+    );
+    auth_api.hook_def( s );
     s.init().listen( () => {
         global_logger.info( `Application listening on: ${JSON.stringify( server_config )}` );
     } );

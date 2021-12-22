@@ -24,8 +24,11 @@ export function object_field_checker (
     object: any_object,
     fields_to_check: Array<string>,
 ) : { ok: boolean, missing: string } {
+    if ( object === undefined ) {
+        throw new Error( 'object_field_checker: Object is undefined' );
+    }
     for ( const field of fields_to_check ) {
-        if ( !( field in object ) ) {
+        if ( object[field] === undefined ) {
             return { ok: false, missing: field };
         }
     }
