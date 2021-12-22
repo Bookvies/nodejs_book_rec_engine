@@ -8,6 +8,7 @@ import {
     StatusCodes,
 } from 'http-status-codes';
 import { auth_module } from './authentication';
+import bodyParser from 'body-parser';
 
 export interface express_app_config {
     ip: string,
@@ -61,6 +62,7 @@ export class express_app {
      * @return {*}  {express_app}
      */
     init (): express_app {
+        this.app.use( bodyParser.json() );
         this.app.use(
             session.default( {
                 secret: 'test',
@@ -94,6 +96,9 @@ export class express_app {
             const extra_data: http_request_extra_data = {
                 current_username: this.auth?.get_username_by_cookie( req.headers.cookie ),
             };
+            if ( extra_data.current_username != undefined ) {
+                this.auth?.user_action( extra_data.current_username );
+            }
             if ( this.callbacks.get[req.url] ) {
                 await this.callbacks.get[req.url]( req, res, extra_data )
                     .catch( ( err ) => {
@@ -113,6 +118,9 @@ export class express_app {
             const extra_data: http_request_extra_data = {
                 current_username: this.auth?.get_username_by_cookie( req.headers.cookie ),
             };
+            if ( extra_data.current_username != undefined ) {
+                this.auth?.user_action( extra_data.current_username );
+            }
             if ( this.callbacks.post[req.url] ) {
                 await this.callbacks.post[req.url]( req, res, extra_data )
                     .catch( ( err ) => {
@@ -132,6 +140,9 @@ export class express_app {
             const extra_data: http_request_extra_data = {
                 current_username: this.auth?.get_username_by_cookie( req.headers.cookie ),
             };
+            if ( extra_data.current_username != undefined ) {
+                this.auth?.user_action( extra_data.current_username );
+            }
             if ( this.callbacks.put[req.url] ) {
                 await this.callbacks.put[req.url]( req, res, extra_data )
                     .catch( ( err ) => {

@@ -99,7 +99,8 @@ export class database {
     }
 
     /**
-     *
+     * Creates user collection according to the schema if
+     * there isnt one already
      *
      */
     async define_user_collection () {
@@ -189,12 +190,10 @@ export class database {
     }
 
     /**
-     * !!! TO BE IMPLEMENTED
      * Returns username and passwd hash if username in database,
-     * throws error NOT_FOUND from enumotherwise
-     *
-     * Probably should check if db inited before req.
-     * In case of db error... dunno. Throws error as well
+     * throws error NOT_FOUND from error otherwise
+     *.
+     * In case of db error transimts it
      *
      * @param {string} username
      * @return {*}  {{ username: string, passwd_hash: strig }}
@@ -218,10 +217,9 @@ export class database {
     /**
      * Adds password hash for a user
      * If user already in database, throws
-     * ALREADY_PRESENT enum;
+     * ALREADY_PRESENT error;
      *
-     * Probably should check if db inited before req.
-     * In case of db error... dunno. Throws error as well
+     * In case of db error transimts it
      *
      * @param {string} username
      * @param {string} passwd_hash
