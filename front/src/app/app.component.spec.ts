@@ -3,6 +3,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BaseComponent } from './base/base.component';
+import { NotificationComponent } from './notification/notification.component';
 import { TranslateUniversalLoaderService } from './translate-universal-loader.service';
 
 describe( 'AppComponent', () => {
@@ -11,6 +12,7 @@ describe( 'AppComponent', () => {
             declarations: [
                 AppComponent,
                 BaseComponent,
+                NotificationComponent,
             ],
             imports: [
                 AppRoutingModule,
@@ -37,7 +39,7 @@ describe( 'AppComponent', () => {
         expect( app.title ).toEqual( 'front' );
     } );
 
-    it( 'should render title', () => {
+    it( 'should render router outlet', () => {
         const fixture = TestBed.createComponent( AppComponent );
         fixture.detectChanges();
         const compiled = fixture.nativeElement as HTMLElement;
