@@ -4,16 +4,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { AppRoutingModule } from '../app-routing.module';
 import { BaseComponent } from '../base/base.component';
-import { HeaderComponent } from '../header/header.component';
+import { LoginComponent } from '../login/login.component';
 import { RegisterComponent } from '../register/register.component';
 import { TranslateUniversalLoaderService } from '../translate-universal-loader.service';
 import { UserComponent } from '../user/user.component';
 
-import { LoginComponent } from './login.component';
+import { HeaderComponent } from './header.component';
 
-describe( 'LoginComponent', () => {
-    let component: LoginComponent;
-    let fixture: ComponentFixture<LoginComponent>;
+describe( 'HeaderComponent', () => {
+    let component: HeaderComponent;
+    let fixture: ComponentFixture<HeaderComponent>;
 
     beforeEach( async () => {
         await TestBed.configureTestingModule( {
@@ -21,8 +21,8 @@ describe( 'LoginComponent', () => {
                 LoginComponent,
                 RegisterComponent,
                 BaseComponent,
-                HeaderComponent,
                 UserComponent,
+                HeaderComponent,
             ],
             imports: [
                 BrowserModule,
@@ -41,7 +41,7 @@ describe( 'LoginComponent', () => {
     } );
 
     beforeEach( () => {
-        fixture = TestBed.createComponent( LoginComponent );
+        fixture = TestBed.createComponent( HeaderComponent );
         component = fixture.componentInstance;
         fixture.detectChanges();
     } );
