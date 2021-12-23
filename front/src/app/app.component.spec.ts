@@ -1,4 +1,6 @@
 import { TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,7 +21,9 @@ describe( 'AppComponent', () => {
                 RegisterComponent,
             ],
             imports: [
+                BrowserModule,
                 AppRoutingModule,
+                FormsModule,
                 TranslateModule.forRoot( {
                     defaultLanguage: 'en',
                     loader: {

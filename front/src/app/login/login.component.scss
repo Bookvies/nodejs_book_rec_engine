@@ -9,9 +9,30 @@
 }
 
 .login_input {
-    width: 70%;
+    width: 40%;
 }
 
-.login_button {
-    width: 33%;
+.from_container {
+    display: table;
+    width: 100%;
+}
+
+.form_inline {
+    display: table-row;
+    width: 100%;
+}
+
+.form_elem_left {
+    display: table-cell;
+    text-align: right;
+    width: 40%;
+    margin: 2%;
+    vertical-align: super;
+}
+
+.form_elem_right {
+    display: table-cell;
+    text-align: left;
+    margin: 2%;
+    vertical-align: middle;
 }

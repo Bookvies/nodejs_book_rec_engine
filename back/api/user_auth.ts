@@ -145,7 +145,7 @@ export class auth_page {
             } else {
                 res.status( StatusCodes.UNAUTHORIZED );
                 res.json( {
-                    error: result.description,
+                    reason: result.description,
                 } );
                 res.end();
                 return;

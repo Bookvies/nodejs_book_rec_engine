@@ -40,12 +40,21 @@ export class LoginComponent implements OnInit {
      *
      */
     send () {
+        if ( this.username == '' ) {
+            this.result = 'Username should not be empty';
+            return;
+        }
+        if ( this.password == '' ) {
+            this.result = 'Password should not be empty';
+            return;
+        }
+
         const to_send = {
             username: this.username,
-            password_hash: sha256( this.password ).toString(),
+            password_hash: ( sha256 as any )( this.password ).toString(),
         };
 
-        console.log( 'Sending login ', to_send );
+        console.log( 'Sending login', to_send );
 
         this.http.request( 'post', '/auth/login', to_send )
             .then( ( val ) => {
@@ -53,7 +62,7 @@ export class LoginComponent implements OnInit {
                     this.shared_data.current_username = val.data.username;
                     this.router.navigateByUrl( '/' );
                 } else {
-                    this.result = 'Recieved and sent username doesnt match';
+                    this.result = 'Recieved and sent username doesnt match.. somehow';
                 }
             } )
             .catch( ( err ) => {
