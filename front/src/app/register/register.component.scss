@@ -1,0 +1,38 @@
+.register_window {
+    width: 50%;
+    margin: 0;
+    position: absolute;
+    top: 33%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.register_input {
+    width: 40%;
+}
+
+.from_container {
+    display: table;
+    width: 100%;
+}
+
+.form_inline {
+    display: table-row;
+    width: 100%;
+}
+
+.form_elem_left {
+    display: table-cell;
+    text-align: right;
+    width: 40%;
+    margin: 2%;
+    vertical-align: super;
+}
+
+.form_elem_right {
+    display: table-cell;
+    text-align: left;
+    margin: 2%;
+    vertical-align: middle;
+}

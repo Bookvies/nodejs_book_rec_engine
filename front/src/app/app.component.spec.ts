@@ -1,9 +1,13 @@
 import { TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BaseComponent } from './base/base.component';
+import { LoginComponent } from './login/login.component';
 import { NotificationComponent } from './notification/notification.component';
+import { RegisterComponent } from './register/register.component';
 import { TranslateUniversalLoaderService } from './translate-universal-loader.service';
 
 describe( 'AppComponent', () => {
@@ -13,9 +17,13 @@ describe( 'AppComponent', () => {
                 AppComponent,
                 BaseComponent,
                 NotificationComponent,
+                LoginComponent,
+                RegisterComponent,
             ],
             imports: [
+                BrowserModule,
                 AppRoutingModule,
+                FormsModule,
                 TranslateModule.forRoot( {
                     defaultLanguage: 'en',
                     loader: {
