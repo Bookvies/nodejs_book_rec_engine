@@ -1,0 +1,36 @@
+<input class="input" type="text" [(ngModel)]="to_search" (ngModelChange)="run_search()" placeholder="Search bar">
+
+<table class="table is-bordered is-fullwidth pt-5">
+    <thead>
+        <th class="table_elem_centered">
+            Image
+        </th>
+        <th class="table_elem_centered">
+            Author
+        </th>
+        <th class="table_elem_centered">
+            Name
+        </th>
+        <ng-container *ngIf="extra_actions.length > 0">
+            <th [attr.colspan]="extra_actions.length" class="table_elem_centered">
+                Actions
+            </th>
+        </ng-container>
+    </thead>
+    <tbody>
+        <tr *ngFor="let book of search_res">
+            <th class="table_elem_centered">
+                <img [src]="book['Image-URL-M']"> 
+            </th>
+            <th class="table_elem_centered">
+                {{book['Book-Author']}}
+            </th>
+            <th class="table_elem_centered">
+                {{book['Book-Title']}}
+            </th>
+            <th *ngFor="let action of extra_actions" class="table_elem_centered">
+                <a (click)="action.action( book )">{{action.name}}</a>
+            </th>
+        </tr>
+    </tbody>
+</table>

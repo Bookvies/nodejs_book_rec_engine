@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { google_search_action } from '../book-search/book-search.component';
 import { HttpServiceService } from '../http-service.service';
 
 
@@ -16,14 +17,19 @@ import { HttpServiceService } from '../http-service.service';
  * @implements {OnInit}
  */
 export class BaseComponent implements OnInit {
+    google_search_action = google_search_action;
+
     /**
      * Creates an instance of BaseComponent.
      * @param {TranslateService} translate
      */
-    constructor ( private translate: TranslateService,
-        private http: HttpServiceService ) {
+    constructor (
+        private translate: TranslateService,
+        private http: HttpServiceService,
+    ) {
 
     }
+
 
     /**
      *

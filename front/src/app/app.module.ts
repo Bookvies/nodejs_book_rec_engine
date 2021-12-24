@@ -15,6 +15,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HeaderComponent } from './header/header.component';
 import { UserComponent } from './user/user.component';
+import { BookSearchComponent } from './book-search/book-search.component';
 
 
 @NgModule( {
@@ -26,6 +27,7 @@ import { UserComponent } from './user/user.component';
         RegisterComponent,
         HeaderComponent,
         UserComponent,
+        BookSearchComponent,
     ],
     imports: [
         BrowserModule,
