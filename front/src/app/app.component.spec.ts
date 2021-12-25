@@ -5,10 +5,12 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BaseComponent } from './base/base.component';
+import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
 import { NotificationComponent } from './notification/notification.component';
 import { RegisterComponent } from './register/register.component';
 import { TranslateUniversalLoaderService } from './translate-universal-loader.service';
+import { UserComponent } from './user/user.component';
 
 describe( 'AppComponent', () => {
     beforeEach( async () => {
@@ -19,6 +21,8 @@ describe( 'AppComponent', () => {
                 NotificationComponent,
                 LoginComponent,
                 RegisterComponent,
+                UserComponent,
+                HeaderComponent,
             ],
             imports: [
                 BrowserModule,

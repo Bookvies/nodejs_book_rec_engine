@@ -4,8 +4,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { AppRoutingModule } from '../app-routing.module';
 import { BaseComponent } from '../base/base.component';
+import { HeaderComponent } from '../header/header.component';
 import { LoginComponent } from '../login/login.component';
 import { TranslateUniversalLoaderService } from '../translate-universal-loader.service';
+import { UserComponent } from '../user/user.component';
 
 import { RegisterComponent } from './register.component';
 
@@ -19,6 +21,8 @@ describe( 'RegisterComponent', () => {
                 LoginComponent,
                 RegisterComponent,
                 BaseComponent,
+                UserComponent,
+                HeaderComponent,
             ],
             imports: [
                 BrowserModule,

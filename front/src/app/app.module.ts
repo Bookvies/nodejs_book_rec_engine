@@ -13,6 +13,8 @@ import { NotificationComponent } from './notification/notification.component';
 import { HttpServiceService } from './http-service.service';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { HeaderComponent } from './header/header.component';
+import { UserComponent } from './user/user.component';
 
 
 @NgModule( {
@@ -22,6 +24,8 @@ import { RegisterComponent } from './register/register.component';
         NotificationComponent,
         LoginComponent,
         RegisterComponent,
+        HeaderComponent,
+        UserComponent,
     ],
     imports: [
         BrowserModule,

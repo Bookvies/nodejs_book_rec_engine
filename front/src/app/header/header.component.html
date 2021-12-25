@@ -1,0 +1,27 @@
+<section class="hero is-small is-primary">
+    <div class="hero-body level">
+        <div class="level-left">
+            <div class="level-item">
+                <a class="title" routerLink="/">
+                    Bookvies
+                </a>
+            </div>
+        </div>
+        <div class="level-right">
+            <div class="level-item">
+                <nav *ngIf="shared_data.current_username == undefined" class="breadcrumb" aria-label="breadcrumbs">
+                    <ul>
+                        <li><a routerLink="/register">Sign up</a></li>
+                        <li><a routerLink="/login">Sign in</a></li>
+                    </ul>
+                </nav>
+                <nav *ngIf="shared_data.current_username != undefined" class="breadcrumb" aria-label="breadcrumbs">
+                    <ul>
+                        <li><a (click)="log_out()">Log out</a></li>
+                        <li><a [routerLink]="'/user/' + shared_data.current_username">{{shared_data.current_username}}</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
