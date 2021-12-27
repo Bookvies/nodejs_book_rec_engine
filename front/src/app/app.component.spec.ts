@@ -5,6 +5,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BaseComponent } from './base/base.component';
+import { BookSearchComponent } from './book-search/book-search.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
 import { NotificationComponent } from './notification/notification.component';
@@ -23,6 +24,7 @@ describe( 'AppComponent', () => {
                 RegisterComponent,
                 UserComponent,
                 HeaderComponent,
+                BookSearchComponent,
             ],
             imports: [
                 BrowserModule,

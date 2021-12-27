@@ -5,7 +5,7 @@ export const google_search_action = {
     name: 'More info',
     action: ( book: book_typedef ) => {
         // eslint-disable-next-line max-len
-        const to_search = `${book['Book-Author'].replace( ' ', '+' )}+-+${book['Book-Title'].replace( ' ', '+' ).replace}`;
+        const to_search = `${book['Book-Author'].replace( new RegExp( ' ', 'g' ), '+' )}+-+${book['Book-Title'].replace( new RegExp( ' ', 'g' ), '+' )}`;
         window.open( 'https://www.google.com/search?q=' + to_search, '_blank' );
     },
 };
@@ -26,6 +26,7 @@ export class BookSearchComponent implements OnInit {
     search_res: Array<book_typedef> = [];
     to_search: string = '';
     @Input() extra_actions: Array<{ name: string, action: ( book: book_typedef ) => void }> = [];
+    @Input() images_used: 'Image-URL-M' | 'Image-URL-S' = 'Image-URL-M';
 
     /**
      * Creates an instance of BookSearchComponent.
@@ -48,6 +49,6 @@ export class BookSearchComponent implements OnInit {
      *
      */
     run_search () {
-        this.search_res = this.dataset.search_for_books( this.to_search.split( ' ' ), 100 );
+        this.search_res = this.dataset.search_for_books( this.to_search.split( ' ' ), 20 );
     }
 }

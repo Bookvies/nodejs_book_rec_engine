@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { AppRoutingModule } from '../app-routing.module';
 import { BaseComponent } from '../base/base.component';
+import { BookSearchComponent } from '../book-search/book-search.component';
 import { HeaderComponent } from '../header/header.component';
 import { LoginComponent } from '../login/login.component';
 import { TranslateUniversalLoaderService } from '../translate-universal-loader.service';
@@ -23,6 +24,7 @@ describe( 'RegisterComponent', () => {
                 BaseComponent,
                 UserComponent,
                 HeaderComponent,
+                BookSearchComponent,
             ],
             imports: [
                 BrowserModule,

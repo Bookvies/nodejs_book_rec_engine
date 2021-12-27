@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpServiceService } from './http-service.service';
 
-
 @Injectable( {
     providedIn: 'root',
 } )

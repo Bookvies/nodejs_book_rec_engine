@@ -1,3 +1,12 @@
-<!-- Testing bulma class -->
-<app-book-search [extra_actions]="[google_search_action]"></app-book-search>
+<div class="container horizontaly_centered">
+    <div class="block content  is-large site_description_block horizontaly_centered">
+        <h1 class="pb-5">Welcome to the [CLASSIFIED]</h1>
+        <p>Here you can get some recommendations on what to read next based on [CLASSIFIED]</p>
+        <p>To get them first you need to sign up for [CLASSIFIED] in the right upper corner</p>
+        <p>For now you can search among what we could offer</p>
+    </div>
+    <div class="block search_block">
+        <app-book-search [extra_actions]="[google_search_action]" [images_used]="'Image-URL-M'"></app-book-search>
+    </div>
+</div>
 <!--<a routerLink="/test">test</a>-->

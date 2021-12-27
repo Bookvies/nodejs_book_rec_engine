@@ -1,11 +1,9 @@
 .login_window {
+    padding-top: 8%;
     width: 50%;
-    margin: 0;
-    position: absolute;
-    top: 33%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    margin: 0 auto;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .login_input {

@@ -20,7 +20,7 @@
     <tbody>
         <tr *ngFor="let book of search_res">
             <th class="table_elem_centered">
-                <img [src]="book['Image-URL-M']"> 
+                <img [src]="book[images_used]"> 
             </th>
             <th class="table_elem_centered">
                 {{book['Book-Author']}}
