@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { google_search_action } from '../book-search/book-search.component';
+import { book_typedef } from '../dataset.service';
 import { HttpServiceService } from '../http-service.service';
 
 
@@ -30,6 +31,11 @@ export class BaseComponent implements OnInit {
 
     }
 
+
+    // eslint-disable-next-line require-jsdoc
+    on_rate ( book: book_typedef, extra_data: { rating: number } ) {
+        console.log( extra_data.rating );
+    }
 
     /**
      *

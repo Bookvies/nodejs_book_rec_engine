@@ -29,7 +29,17 @@
                 {{book['Book-Title']}}
             </th>
             <th *ngFor="let action of extra_actions" class="table_elem_centered">
-                <a (click)="action.action( book )">{{action.name}}</a>
+                <ng-container *ngIf="action.name == '_RATE_THIS_ACTIVE'">
+                    <star-rating [value]="reviews[book['ISBN']]?.rating || 0" [totalstars]="10" (rate)="action.action( book, { rating: $event.newValue } )"
+                        checkedcolor="teal" uncheckedcolor="black" size="24px" [readonly]="false"></star-rating>
+                </ng-container>
+                <ng-container *ngIf="action.name == '_RATE_THIS_INACTIVE'">
+                    <star-rating [value]="reviews[book['ISBN']]?.rating || 0" [totalstars]="10" (rate)="action.action( book, { rating: $event.newValue } )"
+                        checkedcolor="teal" uncheckedcolor="black" size="24px" [readonly]="true"></star-rating>
+                </ng-container>
+                <ng-container *ngIf="action.name != '_RATE_THIS_INACTIVE' && action.name != '_RATE_THIS_ACTIVE'">
+                    <a (click)="action.action( book )">{{action.name}}</a>
+                </ng-container>
             </th>
         </tr>
     </tbody>

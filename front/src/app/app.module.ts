@@ -16,7 +16,8 @@ import { RegisterComponent } from './register/register.component';
 import { HeaderComponent } from './header/header.component';
 import { UserComponent } from './user/user.component';
 import { BookSearchComponent } from './book-search/book-search.component';
-
+import { BookReviewShowComponent } from './book-review-show/book-review-show.component';
+import { RatingModule } from 'ng-starrating';
 
 @NgModule( {
     declarations: [
@@ -28,11 +29,13 @@ import { BookSearchComponent } from './book-search/book-search.component';
         HeaderComponent,
         UserComponent,
         BookSearchComponent,
+        BookReviewShowComponent,
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         FormsModule,
+        RatingModule,
         TranslateModule.forRoot( {
             defaultLanguage: 'en',
             loader: {

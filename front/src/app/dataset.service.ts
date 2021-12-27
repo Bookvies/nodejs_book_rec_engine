@@ -19,6 +19,13 @@ export interface book_typedef_filter {
     'Image-URL-S'?: string;
 }
 
+export interface book_review {
+    [ISBN: string]: {
+        rating: number,
+        'Book-Title': string,
+    }
+}
+
 @Injectable( {
     providedIn: 'root',
 } )
@@ -46,7 +53,7 @@ export class DatasetService {
      * @param {Array<string>} words
      * @param {number} limit
      * @param {book_typedef_filter} [exclude={}]
-     * @return {*}
+     * @return {*} Array<book_typedef>
      */
     search_for_books (
         words: Array<string>,
@@ -82,6 +89,25 @@ export class DatasetService {
                 }
             }
         }
+        return ret;
+    }
+
+
+    /**
+     *
+     *
+     * @param {book_review} reviews
+     * @return {*} Array<book_typedef>
+     */
+    get_books_by_review ( reviews: book_review ) {
+        const ret: Array<book_typedef> = [];
+
+        for ( const book of this.books ) {
+            if ( book.ISBN in reviews ) {
+                ret.push( book );
+            }
+        }
+
         return ret;
     }
 }
