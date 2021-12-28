@@ -60,9 +60,13 @@ export class BookSearchComponent implements OnInit {
      */
     run_search () {
         if ( this.use_reviews ) {
-            this.search_res = this.dataset.get_books_by_review( this.reviews );
+            this.search_res = this.dataset.get_books_by_review(
+                this.reviews, this.to_search.split( ' ' ) );
         } else {
-            this.search_res = this.dataset.search_for_books( this.to_search.split( ' ' ), 20 );
+            this.search_res = this.dataset.search_for_books(
+                this.to_search.split( ' ' ), 20,
+                { ISBN: Object.keys( this.reviews ) },
+            );
         }
     }
 }

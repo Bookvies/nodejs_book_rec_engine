@@ -4,7 +4,7 @@
     <button *ngIf=" editing" class="button" (click)="modal_classes['is-active'] = true">Add</button>
 </div>
 <div *ngIf="editing">
-    <app-book-search [extra_actions]="[google_search_action, { name: '_RATE_THIS_ACTIVE', action: on_rate.bind(this) }]" [images_used]="'Image-URL-S'"
+    <app-book-search [extra_actions]="[google_search_action, { name: 'Delete', action: delete_one.bind(this) }, { name: '_RATE_THIS_ACTIVE', action: on_rate.bind(this) }]" [images_used]="'Image-URL-S'"
         [reviews]="reviews" [use_reviews]='true'></app-book-search>
 </div>
 <div *ngIf="!editing">

@@ -38,8 +38,8 @@ export class integration_helpers {
             return this.db_instance;
         }
         const database_config: database_config = {
-            // address: 'mongodb://root:example@127.0.0.1:27017/',
-            address: 'mongodb://localhost:27017',
+            address: 'mongodb://root:example@127.0.0.1:27017/',
+            // address: 'mongodb://localhost:27017',
             db_name: this.config.db_name,
         };
         this.db_instance = new database(

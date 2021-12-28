@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { google_search_action } from '../book-search/book-search.component';
 import { book_review, book_typedef, DatasetService } from '../dataset.service';
@@ -18,16 +18,7 @@ import { SharedDataService } from '../shared-data.service';
  * @implements {OnInit}
  */
 export class BookReviewShowComponent implements OnInit {
-    @Input() reviews: book_review = {
-        '059035342X': {
-            'rating': 0,
-            'Book-Title': 'Harry Potter and the Sorcerer\'s Stone (Harry Potter (Paperback))',
-        },
-        '0439136350': {
-            'rating': 0,
-            'Book-Title': 'Harry Potter and the Prisoner of Azkaban (Book 3)',
-        },
-    };
+    reviews: book_review = {};
     google_search_action = google_search_action;
 
     editing: boolean = false;
@@ -88,5 +79,14 @@ export class BookReviewShowComponent implements OnInit {
             'rating': 0,
             'Book-Title': book['Book-Title'],
         };
+    }
+
+    /**
+     *
+     *
+     * @param {book_typedef} book
+     */
+    delete_one ( book: book_typedef ) {
+        delete this.reviews[book.ISBN];
     }
 }
