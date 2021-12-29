@@ -2,19 +2,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RatingModule } from 'ng-starrating';
-import { BookReviewShowComponent } from '../book-review-show/book-review-show.component';
 import { BookSearchComponent } from '../book-search/book-search.component';
 
-import { UserComponent } from './user.component';
+import { BookReviewShowComponent } from './book-review-show.component';
 
-describe( 'UserComponent', () => {
-    let component: UserComponent;
-    let fixture: ComponentFixture<UserComponent>;
+describe( 'BookReviewShowComponent', () => {
+    let component: BookReviewShowComponent;
+    let fixture: ComponentFixture<BookReviewShowComponent>;
 
     beforeEach( async () => {
         await TestBed.configureTestingModule( {
             declarations: [
-                UserComponent,
                 BookReviewShowComponent,
                 BookSearchComponent,
             ],
@@ -28,7 +26,7 @@ describe( 'UserComponent', () => {
     } );
 
     beforeEach( () => {
-        fixture = TestBed.createComponent( UserComponent );
+        fixture = TestBed.createComponent( BookReviewShowComponent );
         component = fixture.componentInstance;
         fixture.detectChanges();
     } );
