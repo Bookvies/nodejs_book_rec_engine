@@ -3,6 +3,7 @@ import { global_logger, logger } from './logger';
 import { database, database_config } from './database';
 import { auth_module, auth_module_config } from './authentication';
 import { auth_page } from './api/user_auth';
+import { user_survey_page } from './api/user_survey_page';
 
 
 let server_config: server.express_app_config;
@@ -96,6 +97,19 @@ function init () {
         } ),
     );
     auth_api.hook_def( s );
+
+    const survey_api = new user_survey_page(
+        new logger( {
+            debug: true,
+            info: true,
+            warn: true,
+            error: true,
+            prefix: 'SURVEY_API',
+        } ),
+    );
+    survey_api.hook_def( s, db_client );
+
+
     s.init().listen( () => {
         global_logger.info( `Application listening on: ${JSON.stringify( server_config )}` );
     } );

@@ -1,7 +1,8 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { google_search_action } from '../book-search/book-search.component';
-import { book_review, book_typedef, DatasetService } from '../dataset.service';
+import { book_review, book_typedef } from '../dataset.service';
+import { HttpServiceService } from '../http-service.service';
 import { SharedDataService } from '../shared-data.service';
 
 
@@ -26,16 +27,16 @@ export class BookReviewShowComponent implements OnInit {
     modal_classes = {
         'is-active': false,
     };
+    result: string = '';
 
     /**
      * Creates an instance of BookReviewShowComponent.
      * @param {DatasetService} dataset
      */
     constructor (
-        private dataset: DatasetService,
         private active_route: ActivatedRoute,
         private shared_data: SharedDataService,
-        private change_detection: ChangeDetectorRef,
+        private http: HttpServiceService,
     ) { }
 
 
@@ -45,6 +46,25 @@ export class BookReviewShowComponent implements OnInit {
             this.allow_edit = this.shared_data.current_username ==
                 this.active_route.snapshot.paramMap.get( 'username' );
         }
+        this.http.request(
+            'post',
+            '/survey/books/reviews',
+            { username: this.active_route.snapshot.paramMap.get( 'username' ) },
+        )
+            .then( ( val ) => {
+                this.reviews = val.data.reviews;
+            } )
+            .catch( ( err ) => {
+                if ( err ) {
+                    if ( err.status = 401 ) {
+                        this.result = 'Unauthorized';
+                    } else {
+                        this.result = err;
+                    }
+                } else {
+                    this.result = 'Could not save. Try again later';
+                }
+            } );
     }
 
     /**
@@ -52,8 +72,21 @@ export class BookReviewShowComponent implements OnInit {
      *
      */
     save_changes () {
-        this.editing = false;
-        console.log( this.reviews );
+        this.http.request(
+            'post',
+            '/survey/books/reviews',
+            {
+                username: this.active_route.snapshot.paramMap.get( 'username' ),
+                reviews: this.reviews,
+            },
+        )
+            .then( ( ) => {
+                this.editing = false;
+                console.log( this.reviews );
+            } )
+            .catch( ( err ) => {
+                console.log( err );
+            } );
     }
 
     /**
@@ -68,15 +101,17 @@ export class BookReviewShowComponent implements OnInit {
         }
     }
 
+
     /**
      *
      *
      * @param {book_typedef} book
+     * @param {{ rating: number }} extra_data
      */
-    add_new ( book: book_typedef ) {
+    add_new ( book: book_typedef, extra_data: { rating: number } ) {
         console.log( 'adding' );
         this.reviews[book.ISBN] = {
-            'rating': 0,
+            'rating': extra_data.rating,
             'Book-Title': book['Book-Title'],
         };
     }

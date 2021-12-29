@@ -25,5 +25,5 @@ Returns 500 and { error: string } if exit caused server error
 POST /survey/books/reviews
 Returns 200 and { reviews: object } if body.reviews is undefined
 Returns 201 if body.reviews is defined. Adds body.reviews to database for a user
-Returns 401 and { reason: string } if request and auth username doesnt match
+Returns 401 and { reason: string } if body defined and request and auth username doesnt match
 Returns 500 and { error: string } if exit caused server error

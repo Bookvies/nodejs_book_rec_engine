@@ -1,7 +1,8 @@
 <div *ngIf="allow_edit">
-    <button *ngIf="!editing" class="button" (click)="editing = true">Edit</button>
+    <button *ngIf="!editing" class="button" (click)="editing = true; result = ''">Edit</button>
     <button *ngIf=" editing" class="button" (click)="save_changes()">Save</button>
     <button *ngIf=" editing" class="button" (click)="modal_classes['is-active'] = true">Add</button>
+    <div *ngIf=" editing">{{result}}</div>
 </div>
 <div *ngIf="editing">
     <app-book-search [extra_actions]="[google_search_action, { name: 'Delete', action: delete_one.bind(this) }, { name: '_RATE_THIS_ACTIVE', action: on_rate.bind(this) }]" [images_used]="'Image-URL-S'"
@@ -14,6 +15,6 @@
 <div class="modal" [ngClass]="modal_classes">
     <div class="modal-background" (click)="modal_classes['is-active'] = false"></div>
     <div class="modal-content" style="height: 90%; width: 70%; background-color: lightgrey;">
-        <app-book-search [extra_actions]="[google_search_action, { name: 'Add', action: add_new.bind(this) }]" [images_used]="'Image-URL-M'" [reviews]="reviews"></app-book-search>
+        <app-book-search [extra_actions]="[google_search_action, { name: '_RATE_THIS_ACTIVE', action: add_new.bind(this) }]" [images_used]="'Image-URL-M'" [reviews]="reviews"></app-book-search>
     </div>
 </div>

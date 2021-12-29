@@ -5,7 +5,7 @@
         <th class="table_elem_centered">
             Image
         </th>
-        <th class="table_elem_centered">
+        <th class="table_elem_centered" style="width: 12%;">
             Author
         </th>
         <th class="table_elem_centered">
@@ -28,19 +28,19 @@
             <th class="table_elem_centered">
                 {{book['Book-Title']}}
             </th>
-            <th *ngFor="let action of extra_actions" class="table_elem_centered">
-                <ng-container *ngIf="action.name == '_RATE_THIS_ACTIVE'">
+            <ng-container *ngFor="let action of extra_actions">
+                <th *ngIf="action.name == '_RATE_THIS_ACTIVE'"  class="table_elem_centered"  style="width: 22%;">
                     <star-rating [value]="reviews[book['ISBN']]?.rating || 0" [totalstars]="10" (rate)="action.action( book, { rating: $event.newValue } )"
                         checkedcolor="teal" uncheckedcolor="black" size="24px" [readonly]="false"></star-rating>
-                </ng-container>
-                <ng-container *ngIf="action.name == '_RATE_THIS_INACTIVE'">
+                </th>
+                <th *ngIf="action.name == '_RATE_THIS_INACTIVE'"  class="table_elem_centered"  style="width: 22%;">
                     <star-rating [value]="reviews[book['ISBN']]?.rating || 0" [totalstars]="10" (rate)="action.action( book, { rating: $event.newValue } )"
                         checkedcolor="teal" uncheckedcolor="black" size="24px" [readonly]="true"></star-rating>
-                </ng-container>
-                <ng-container *ngIf="action.name != '_RATE_THIS_INACTIVE' && action.name != '_RATE_THIS_ACTIVE'">
+                </th>
+                <th *ngIf="action.name != '_RATE_THIS_INACTIVE' && action.name != '_RATE_THIS_ACTIVE'"  class="table_elem_centered" style="width: 10%;">
                     <a (click)="action.action( book )">{{action.name}}</a>
-                </ng-container>
-            </th>
+                </th>
+            </ng-container>
         </tr>
     </tbody>
 </table>
