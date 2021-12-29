@@ -37,8 +37,8 @@ function init () {
         };
     } else {
         db_config = {
-            // address: 'mongodb://root:example@127.0.0.1:27017/',
-            address: 'mongodb://localhost:27017',
+            address: 'mongodb://root:example@127.0.0.1:27017/',
+            // address: 'mongodb://localhost:27017',
             db_name: 'testing',
         };
     }

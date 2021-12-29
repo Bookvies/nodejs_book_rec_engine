@@ -17,6 +17,7 @@ import { SharedDataService } from '../shared-data.service';
  */
 export class UserComponent implements OnInit {
     username: string = '';
+    active_tab: string = 'Books';
 
     /**
      * Creates an instance of UserComponent.
