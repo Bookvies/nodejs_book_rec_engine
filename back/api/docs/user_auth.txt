@@ -22,6 +22,11 @@ Returns 200 if exit is successful
 Returns 401 and { reason: string } if exit failed ( user wasnt logged in )
 Returns 500 and { error: string } if exit caused server error
 
+POST /auth/user_exists
+Returns 200 and { result: boolean } if request is ok
+Returns 400 and { error: string } if body.username is undefined  
+Returns 500 and { error: string } if exit caused server error
+
 POST /survey/books/reviews
 Returns 200 and { reviews: object } if body.reviews is undefined
 Returns 201 if body.reviews is defined. Adds body.reviews to database for a user

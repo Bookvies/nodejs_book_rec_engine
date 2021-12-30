@@ -151,5 +151,32 @@ export class auth_page {
                 return;
             }
         } );
+
+        server.on( 'post', '/auth/user_exists', async ( req, res ) => {
+            const obj_matchg = object_field_checker( req.body, ['username'] );
+            if ( !obj_matchg.ok ) {
+                res.status( StatusCodes.BAD_REQUEST );
+                res.json( {
+                    error: `Expected ${obj_matchg.missing} in the request body`,
+                } );
+                res.end();
+                return;
+            }
+            await this.auth.user_exists( req.body.username )
+                .then( ( val ) => {
+                    res.status( StatusCodes.OK );
+                    res.json( { result: val } );
+                    res.end();
+                    return;
+                } )
+                .catch( ( err ) => {
+                    res.status( StatusCodes.INTERNAL_SERVER_ERROR );
+                    res.json( {
+                        error: err,
+                    } );
+                    res.end();
+                    return;
+                } );
+        } );
     }
 }

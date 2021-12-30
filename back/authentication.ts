@@ -123,6 +123,34 @@ export class auth_module {
 
 
     /**
+     * Checks if user exists
+     *
+     * Throws errors originated in db
+     *
+     * @param {string} username
+     * @return {*}  {Promise<boolean>}
+     */
+    async user_exists ( username: string ):
+        Promise<boolean> {
+        return await this.database.retrieve_user_passwd( username )
+            .then( ( val ) => {
+                if ( val.username == username ) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } )
+            .catch( ( err ) => {
+                if ( err.code == DATABASE_ERROR_CODES.NOT_FOUND && err.origin == 'database' ) {
+                    return false;
+                } else {
+                    throw err;
+                }
+            } );
+    }
+
+
+    /**
      * Removes cookie from active users
      * If succ true, operation was successful
      *

@@ -227,4 +227,15 @@ describe( 'Auth', () => {
         const ti = 15;
         expect( auth.exit( `c${ti}_0` ).succ ).toBeFalsy();
     } );
+
+    it( 'should return false from user_exists is there is no such user 16', async () => {
+        const ti = 16;
+        expect( await auth.user_exists( `a${ti}_0` ) ).toBeFalsy();
+    } );
+
+    it( 'should return true from user_exists  17', async () => {
+        const ti = 17;
+        await auth.register( `c${ti}_0`, `a${ti}_0`, `p${ti}_0` );
+        expect( await auth.user_exists( `a${ti}_0` ) ).toBeTruthy();
+    } );
 } );
