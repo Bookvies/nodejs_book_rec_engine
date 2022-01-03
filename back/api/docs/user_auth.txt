@@ -21,3 +21,9 @@ Returns 400 and { error: string } if header does not contain a cookie
 Returns 200 if exit is successful
 Returns 401 and { reason: string } if exit failed ( user wasnt logged in )
 Returns 500 and { error: string } if exit caused server error
+
+POST /survey/books/reviews
+Returns 200 and { reviews: object } if body.reviews is undefined
+Returns 201 if body.reviews is defined. Adds body.reviews to database for a user
+Returns 401 and { reason: string } if body defined and request and auth username doesnt match
+Returns 500 and { error: string } if exit caused server error

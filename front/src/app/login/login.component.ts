@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
             .then( ( val ) => {
                 if ( val.data.username == to_send.username ) {
                     this.shared_data.current_username = val.data.username;
-                    this.router.navigateByUrl( '/' );
+                    this.router.navigateByUrl( `/user/${val.data.username}` );
                 } else {
                     this.result = 'Recieved and sent username doesnt match.. somehow';
                 }

@@ -1,22 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { RatingModule } from 'ng-starrating';
 import { AppRoutingModule } from '../app-routing.module';
 import { BaseComponent } from '../base/base.component';
 import { BookReviewShowComponent } from '../book-review-show/book-review-show.component';
-import { BookSearchComponent } from '../book-search/book-search.component';
+import { HeaderComponent } from '../header/header.component';
 import { LoginComponent } from '../login/login.component';
 import { RegisterComponent } from '../register/register.component';
-import { TranslateUniversalLoaderService } from '../translate-universal-loader.service';
 import { UserComponent } from '../user/user.component';
 
-import { HeaderComponent } from './header.component';
+import { BookSearchComponent } from './book-search.component';
 
-describe( 'HeaderComponent', () => {
-    let component: HeaderComponent;
-    let fixture: ComponentFixture<HeaderComponent>;
+describe( 'BookSearchComponent', () => {
+    let component: BookSearchComponent;
+    let fixture: ComponentFixture<BookSearchComponent>;
 
     beforeEach( async () => {
         await TestBed.configureTestingModule( {
@@ -24,8 +22,8 @@ describe( 'HeaderComponent', () => {
                 LoginComponent,
                 RegisterComponent,
                 BaseComponent,
-                UserComponent,
                 HeaderComponent,
+                UserComponent,
                 BookSearchComponent,
                 BookReviewShowComponent,
             ],
@@ -34,20 +32,13 @@ describe( 'HeaderComponent', () => {
                 AppRoutingModule,
                 FormsModule,
                 RatingModule,
-                TranslateModule.forRoot( {
-                    defaultLanguage: 'en',
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateUniversalLoaderService,
-                    },
-                } ),
             ],
         } )
             .compileComponents();
     } );
 
     beforeEach( () => {
-        fixture = TestBed.createComponent( HeaderComponent );
+        fixture = TestBed.createComponent( BookSearchComponent );
         component = fixture.componentInstance;
         fixture.detectChanges();
     } );

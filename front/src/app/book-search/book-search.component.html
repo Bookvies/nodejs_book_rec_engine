@@ -1,0 +1,46 @@
+<input class="input" type="text" [(ngModel)]="to_search" (ngModelChange)="run_search()" placeholder="Search bar">
+
+<table class="table is-bordered is-fullwidth pt-5">
+    <thead>
+        <th class="table_elem_centered">
+            Image
+        </th>
+        <th class="table_elem_centered" style="width: 12%;">
+            Author
+        </th>
+        <th class="table_elem_centered">
+            Name
+        </th>
+        <ng-container *ngIf="extra_actions.length > 0">
+            <th [attr.colspan]="extra_actions.length" class="table_elem_centered">
+                Actions
+            </th>
+        </ng-container>
+    </thead>
+    <tbody>
+        <tr *ngFor="let book of search_res">
+            <th class="table_elem_centered">
+                <img [src]="book[images_used]"> 
+            </th>
+            <th class="table_elem_centered">
+                {{book['Book-Author']}}
+            </th>
+            <th class="table_elem_centered">
+                {{book['Book-Title']}}
+            </th>
+            <ng-container *ngFor="let action of extra_actions">
+                <th *ngIf="action.name == '_RATE_THIS_ACTIVE'"  class="table_elem_centered"  style="width: 22%;">
+                    <star-rating [value]="reviews[book['ISBN']]?.rating || 0" [totalstars]="10" (rate)="action.action( book, { rating: $event.newValue } )"
+                        checkedcolor="teal" uncheckedcolor="black" size="24px" [readonly]="false"></star-rating>
+                </th>
+                <th *ngIf="action.name == '_RATE_THIS_INACTIVE'"  class="table_elem_centered"  style="width: 22%;">
+                    <star-rating [value]="reviews[book['ISBN']]?.rating || 0" [totalstars]="10" (rate)="action.action( book, { rating: $event.newValue } )"
+                        checkedcolor="teal" uncheckedcolor="black" size="24px" [readonly]="true"></star-rating>
+                </th>
+                <th *ngIf="action.name != '_RATE_THIS_INACTIVE' && action.name != '_RATE_THIS_ACTIVE'"  class="table_elem_centered" style="width: 10%;">
+                    <a (click)="action.action( book )">{{action.name}}</a>
+                </th>
+            </ng-container>
+        </tr>
+    </tbody>
+</table>
