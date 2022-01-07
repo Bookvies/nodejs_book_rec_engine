@@ -12,7 +12,7 @@
         </div>
         <div class="level-right" style="width: 25%;">
             <div class="level-item" style="width: 100%;">
-                <button *ngIf="!editing" class="button is-fullwidth" (click)="result='Not yet implemented'">Get recommendation</button>
+                <button *ngIf="!editing" class="button is-fullwidth" (click)="show_recommendations = true">Get recommendation</button>
             </div>
         </div>
     </nav>
@@ -32,3 +32,5 @@
         <app-book-search [extra_actions]="[google_search_action, { name: '_RATE_THIS_ACTIVE', action: add_new.bind(this) }]" [images_used]="'Image-URL-M'" [reviews]="reviews"></app-book-search>
     </div>
 </div>
+
+<app-book-recommendation *ngIf="show_recommendations" [reviews]="reviews" (closing)="show_recommendations = false;"></app-book-recommendation>

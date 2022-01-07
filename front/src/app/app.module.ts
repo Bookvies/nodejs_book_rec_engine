@@ -18,6 +18,7 @@ import { UserComponent } from './user/user.component';
 import { BookSearchComponent } from './book-search/book-search.component';
 import { BookReviewShowComponent } from './book-review-show/book-review-show.component';
 import { RatingModule } from 'ng-starrating';
+import { BookRecommendationComponent } from './book-recommendation/book-recommendation.component';
 
 @NgModule( {
     declarations: [
@@ -30,6 +31,7 @@ import { RatingModule } from 'ng-starrating';
         UserComponent,
         BookSearchComponent,
         BookReviewShowComponent,
+        BookRecommendationComponent,
     ],
     imports: [
         BrowserModule,

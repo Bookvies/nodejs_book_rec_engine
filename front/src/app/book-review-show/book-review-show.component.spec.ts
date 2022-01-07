@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RatingModule } from 'ng-starrating';
+import { BookRecommendationComponent } from '../book-recommendation/book-recommendation.component';
 import { BookSearchComponent } from '../book-search/book-search.component';
 
 import { BookReviewShowComponent } from './book-review-show.component';
@@ -15,6 +16,7 @@ describe( 'BookReviewShowComponent', () => {
             declarations: [
                 BookReviewShowComponent,
                 BookSearchComponent,
+                BookRecommendationComponent,
             ],
             imports: [
                 RouterTestingModule,

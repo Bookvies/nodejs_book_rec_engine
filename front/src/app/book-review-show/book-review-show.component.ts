@@ -21,6 +21,7 @@ import { SharedDataService } from '../shared-data.service';
 export class BookReviewShowComponent implements OnInit {
     reviews: book_review = {};
     google_search_action = google_search_action;
+    show_recommendations = false;
 
     editing: boolean = false;
     allow_edit = false;

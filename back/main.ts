@@ -4,6 +4,7 @@ import { database, database_config } from './database';
 import { auth_module, auth_module_config } from './authentication';
 import { auth_page } from './api/user_auth';
 import { user_survey_page } from './api/user_survey_page';
+import { recommendation_page } from './api/recommendation_page';
 
 
 let server_config: server.express_app_config;
@@ -108,6 +109,17 @@ function init () {
         } ),
     );
     survey_api.hook_def( s, db_client );
+
+    const recoomendation_api = new recommendation_page(
+        new logger( {
+            debug: true,
+            info: true,
+            warn: true,
+            error: true,
+            prefix: 'RECOMMENDATION_API',
+        } ),
+    );
+    recoomendation_api.hook_def( s );
 
 
     s.init().listen( () => {

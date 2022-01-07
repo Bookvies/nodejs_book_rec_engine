@@ -1,0 +1,6 @@
+<div class="modal is-active is-active">
+    <div class="modal-background" (click)="on_close()"></div>
+    <div class="modal-content" style="height: 90%; width: 70%; background-color: lightgrey;">
+        <app-book-search [extra_actions]="[google_search_action]" [images_used]="'Image-URL-M'" [books]="books" [use_books]="true"></app-book-search>
+    </div>
+</div>
