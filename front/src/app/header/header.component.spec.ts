@@ -5,6 +5,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { RatingModule } from 'ng-starrating';
 import { AppRoutingModule } from '../app-routing.module';
 import { BaseComponent } from '../base/base.component';
+import { BookRecommendationComponent } from '../book-recommendation/book-recommendation.component';
 import { BookReviewShowComponent } from '../book-review-show/book-review-show.component';
 import { BookSearchComponent } from '../book-search/book-search.component';
 import { LoginComponent } from '../login/login.component';
@@ -28,6 +29,7 @@ describe( 'HeaderComponent', () => {
                 HeaderComponent,
                 BookSearchComponent,
                 BookReviewShowComponent,
+                BookRecommendationComponent,
             ],
             imports: [
                 BrowserModule,

@@ -4,6 +4,7 @@ import { database, database_config } from './database';
 import { auth_module, auth_module_config } from './authentication';
 import { auth_page } from './api/user_auth';
 import { user_survey_page } from './api/user_survey_page';
+import { recommendation_page } from './api/recommendation_page';
 
 
 let server_config: server.express_app_config;
@@ -18,7 +19,7 @@ if ( process.env.ON_HEROKU ) {
     };
 } else {
     server_config = {
-        ip: '127.0.0.1',
+        ip: '0.0.0.0',
         port: parseInt( process.env.PORT || '8080' ),
     };
 }
@@ -37,9 +38,9 @@ function init () {
         };
     } else {
         db_config = {
-            // address: 'mongodb://root:example@127.0.0.1:27017/',
-            address: 'mongodb://localhost:27017',
-            db_name: 'testing',
+            // address: process.env.MONGO_URL || 'mongodb://root:example@127.0.0.1:27017/',
+            address: process.env.MONGO_URL || 'mongodb://localhost:27017',
+            db_name: process.env.MONGO_DB_NAME || 'testing',
         };
     }
     db_client = new database(
@@ -108,6 +109,17 @@ function init () {
         } ),
     );
     survey_api.hook_def( s, db_client );
+
+    const recoomendation_api = new recommendation_page(
+        new logger( {
+            debug: true,
+            info: true,
+            warn: true,
+            error: true,
+            prefix: 'RECOMMENDATION_API',
+        } ),
+    );
+    recoomendation_api.hook_def( s );
 
 
     s.init().listen( () => {
