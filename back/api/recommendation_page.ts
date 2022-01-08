@@ -65,6 +65,11 @@ export class recommendation_page {
             res.end();
             return;
             */
+            const data: { [title: string]: number } = {};
+            // eslint-disable-next-line guard-for-in
+            for ( const v in req.body.reviews ) {
+                data[req.body.reviews[v]['Book-Title']] = req.body.reviews[v].rating;
+            }
             await axios.default( {
                 method: 'POST',
                 url: '/recs/books',

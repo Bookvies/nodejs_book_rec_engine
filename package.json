@@ -19,7 +19,9 @@
     "all:build": "npm run front:build && npm run back:build",
     "all:run": "npm run all:build && npm run start",
     "all:lint": "npx eslint \"./**/*.ts\"",
-    "all:fix_lint": "npx eslint \"./**/*.ts\" --fix"
+    "all:fix_lint": "npx eslint \"./**/*.ts\" --fix",
+    "docker:run": "sudo docker-compose up -d",
+    "docker:stop": "sudo docker-compose down"
   },
   "repository": "https://github.com/Bookvies/nodejs_book_rec_engine",
   "keywords": [],

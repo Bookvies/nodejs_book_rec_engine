@@ -19,7 +19,7 @@ if ( process.env.ON_HEROKU ) {
     };
 } else {
     server_config = {
-        ip: '127.0.0.1',
+        ip: '0.0.0.0',
         port: parseInt( process.env.PORT || '8080' ),
     };
 }
@@ -38,9 +38,9 @@ function init () {
         };
     } else {
         db_config = {
-            // address: 'mongodb://root:example@127.0.0.1:27017/',
-            address: 'mongodb://localhost:27017',
-            db_name: 'testing',
+            // address: process.env.MONGO_URL || 'mongodb://root:example@127.0.0.1:27017/',
+            address: process.env.MONGO_URL || 'mongodb://localhost:27017',
+            db_name: process.env.MONGO_DB_NAME || 'testing',
         };
     }
     db_client = new database(
