@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { RatingModule } from 'ng-starrating';
+import { BookRecommendationComponent } from '../book-recommendation/book-recommendation.component';
 import { BookReviewShowComponent } from '../book-review-show/book-review-show.component';
 import { BookSearchComponent } from '../book-search/book-search.component';
 import { TranslateUniversalLoaderService } from '../translate-universal-loader.service';
@@ -19,6 +20,7 @@ describe( 'BaseComponent', () => {
                 BookSearchComponent,
                 BookReviewShowComponent,
                 BookSearchComponent,
+                BookRecommendationComponent,
             ],
             imports: [
                 FormsModule,

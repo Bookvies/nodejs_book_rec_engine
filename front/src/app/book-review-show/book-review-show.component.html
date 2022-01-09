@@ -1,9 +1,23 @@
-<div *ngIf="allow_edit">
-    <button *ngIf="!editing" class="button" (click)="editing = true; result = ''">Edit</button>
-    <button *ngIf=" editing" class="button" (click)="save_changes()">Save</button>
-    <button *ngIf=" editing" class="button" (click)="modal_classes['is-active'] = true">Add</button>
-    <div *ngIf=" editing">{{result}}</div>
+<div *ngIf="allow_edit" class="pb-7">
+    <div *ngIf="result != ''" class="notification is-danger is-light has-text-centered" [innerHTML]="result"></div>
+    <nav class="level">
+        <div class="level-left" style="width: 25%;">
+            <div class="level-item" style="width: 100%;">
+                <button *ngIf="!editing" class="button is-fullwidth" (click)="editing = true; result = ''">Edit</button>
+                <button *ngIf=" editing" class="button is-fullwidth" (click)="save_changes()">Save</button>
+            </div>
+        </div>
+        <div class="level-item">
+            <button *ngIf=" editing" class="button is-fullwidth" style="width: 50%;" (click)="modal_classes['is-active'] = true">Add</button>
+        </div>
+        <div class="level-right" style="width: 25%;">
+            <div class="level-item" style="width: 100%;">
+                <button *ngIf="!editing" class="button is-fullwidth" (click)="show_recommendations = true">Get recommendation</button>
+            </div>
+        </div>
+    </nav>
 </div>
+
 <div *ngIf="editing">
     <app-book-search [extra_actions]="[google_search_action, { name: 'Delete', action: delete_one.bind(this) }, { name: '_RATE_THIS_ACTIVE', action: on_rate.bind(this) }]" [images_used]="'Image-URL-S'"
         [reviews]="reviews" [use_reviews]='true'></app-book-search>
@@ -18,3 +32,5 @@
         <app-book-search [extra_actions]="[google_search_action, { name: '_RATE_THIS_ACTIVE', action: add_new.bind(this) }]" [images_used]="'Image-URL-M'" [reviews]="reviews"></app-book-search>
     </div>
 </div>
+
+<app-book-recommendation *ngIf="show_recommendations" [reviews]="reviews" (closing)="show_recommendations = false;"></app-book-recommendation>

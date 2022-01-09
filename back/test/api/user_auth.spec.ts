@@ -356,4 +356,66 @@ describe( 'server events', () => {
             .set( 'Accept', 'application/json' )
             .expect( StatusCodes.BAD_REQUEST );
     } );
+
+    it( 'should result into false from /auth/user_exists before registration 11', async () => {
+        const ti = 11;
+        await request.default( server.app )
+            .post( '/auth/user_exists' )
+            .set( 'Accept', 'application/json' )
+            .send( {
+                username: `a${ti}_0`,
+            } )
+            .expect( StatusCodes.OK )
+            .expect( ( res: request.Response ) => {
+                expect( res.body.result ).toBeFalsy();
+            } );
+    } );
+
+    it( 'should result into true from /auth/user_exists 12', async () => {
+        const ti = 12;
+        await request.default( server.app )
+            .post( '/auth/register' )
+            .set( 'Accept', 'application/json' )
+            .set( 'Cookie', [`c${ti}_0`] )
+            .send( {
+                username: `a${ti}_0`,
+                password_hash: `p${ti}_0`,
+            } )
+            .expect( StatusCodes.CREATED )
+            .expect( ( res: request.Response ) => {
+                expect( res.body.username ).toEqual( `a${ti}_0` );
+            } );
+
+        await request.default( server.app )
+            .post( '/auth/user_exists' )
+            .set( 'Accept', 'application/json' )
+            .send( {
+                username: `a${ti}_0`,
+            } )
+            .expect( StatusCodes.OK )
+            .expect( ( res: request.Response ) => {
+                expect( res.body.result ).toBeTruthy();
+            } );
+    } );
+
+    it( 'should result into error from /auth/user_exists without username 13', async () => {
+        const ti = 13;
+        await request.default( server.app )
+            .post( '/auth/register' )
+            .set( 'Accept', 'application/json' )
+            .set( 'Cookie', [`c${ti}_0`] )
+            .send( {
+                username: `a${ti}_0`,
+                password_hash: `p${ti}_0`,
+            } )
+            .expect( StatusCodes.CREATED )
+            .expect( ( res: request.Response ) => {
+                expect( res.body.username ).toEqual( `a${ti}_0` );
+            } );
+
+        await request.default( server.app )
+            .post( '/auth/user_exists' )
+            .set( 'Accept', 'application/json' )
+            .expect( StatusCodes.BAD_REQUEST );
+    } );
 } );

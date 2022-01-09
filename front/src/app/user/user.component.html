@@ -1,3 +1,54 @@
-<div>User page for {{username}}</div>
-<div *ngIf="username == shared_data.current_username">It is you!</div>
-<app-book-review-show></app-book-review-show>
+<ng-container *ngIf="!exists">
+    <div class="box horizontally-centered user_box">
+        <nav class="level">
+            <div class="level-item content is-medium">
+                <p>
+                    No such user exists
+                </p>
+            </div>
+        </nav>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="exists">
+    <div class="box horizontally-centered user_box">
+        <nav class="level">
+            <div class="level-left">
+                <div class="level-item content is-medium">
+                    <h1>{{username}}</h1>
+                </div>
+            </div>
+            <div class="level-right">
+                <figure class="level-item image is-128x128">
+                    <img src="/assets/profile/default_profile_picture.png">
+                </figure>
+            </div>
+        </nav>
+    </div>
+
+
+    <!--
+    <div class="box horizontally-centered reviews_box">
+        <div class="tabs is-large is-fullwidth">
+            <ul>
+                <li [ngClass]="{ 'is-active': active_tab=='Books' }">
+                    <a (click)="active_tab='Books'">
+                        Books
+                    </a>
+                </li>
+                <li [ngClass]="{ 'is-active': active_tab=='Moovies' }">
+                    <a (click)="active_tab='Moovies'">
+                        Moovies
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <app-book-review-show [ngClass]="{ 'is-hidden': active_tab!='Books' }"></app-book-review-show>
+        <div [ngClass]="{ 'is-hidden': active_tab!='Moovies' }">Here should be something for moovies</div>
+    </div>
+    -->
+    <div class="box horizontally-centered reviews_box">
+        <app-book-review-show [ngClass]="{ 'is-hidden': active_tab!='Books' }"></app-book-review-show>
+    </div>
+    
+</ng-container>

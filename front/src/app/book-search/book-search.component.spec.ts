@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RatingModule } from 'ng-starrating';
 import { AppRoutingModule } from '../app-routing.module';
 import { BaseComponent } from '../base/base.component';
+import { BookRecommendationComponent } from '../book-recommendation/book-recommendation.component';
 import { BookReviewShowComponent } from '../book-review-show/book-review-show.component';
 import { HeaderComponent } from '../header/header.component';
 import { LoginComponent } from '../login/login.component';
@@ -26,6 +27,7 @@ describe( 'BookSearchComponent', () => {
                 UserComponent,
                 BookSearchComponent,
                 BookReviewShowComponent,
+                BookRecommendationComponent,
             ],
             imports: [
                 BrowserModule,

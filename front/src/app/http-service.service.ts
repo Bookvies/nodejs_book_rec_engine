@@ -48,6 +48,7 @@ export class HttpServiceService {
             } )
             .catch( ( err ) => {
                 if ( err.response ) {
+                    console.log( 1, err );
                     console.log( err.message );
                     if ( err.response.status == 404 ) {
                         this.notify_serivice.show_message(
@@ -56,6 +57,10 @@ export class HttpServiceService {
                     } else if ( err.response.status == 500 ) {
                         this.notify_serivice.show_message(
                             'Server seems to be experiencing error<br>Please, try again later' );
+                        throw undefined;
+                    } else if ( err.response.status == 502 || err.response.status == 504 ) {
+                        this.notify_serivice.show_message(
+                            'Gateway seems to be experiencing error<br>Please, try again later' );
                         throw undefined;
                     }
                     throw err.response;

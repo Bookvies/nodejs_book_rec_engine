@@ -1,0 +1,21 @@
+version: '3.7'
+services:
+  mongodb:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - /home/alstrasz/project/mongodb/:/data/db
+  nodejs:
+    build:
+      dockerfile: Dockerfile
+    container_name: nodejs
+    restart: unless-stopped
+    environment:
+      - PORT=8080
+      - MONGO_URL=mongodb://mongodb:27017
+      - MONGO_DB_NAME=from_docker
+    ports:
+      - 8080:8080
+    depends_on:
+      - mongodb
