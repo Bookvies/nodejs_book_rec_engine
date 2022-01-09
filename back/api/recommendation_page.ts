@@ -70,17 +70,18 @@ export class recommendation_page {
             for ( const v in req.body.reviews ) {
                 data[req.body.reviews[v]['Book-Title']] = req.body.reviews[v].rating;
             }
+            this.logger.error( `Sending to ${process.env.RECS_ADDR || '127.0.0.1:5000'}` )
             await axios.default( {
                 method: 'POST',
                 url: '/recs/books',
-                baseURL: '127.0.0.1',
-                data: { reviews: req.body.reviews },
-                timeout: 5000,
+                baseURL: process.env.RECS_ADDR || '127.0.0.1:5000',
+                data: data,
+                timeout: 30000,
             } )
                 .then( ( val ) => {
                     res.status( StatusCodes.OK );
                     res.json( {
-                        books: val.data,
+                        books: val.data?.data,
                     } );
                     res.end();
                     return;

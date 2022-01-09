@@ -5,7 +5,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - /home/alstrasz/project/mongodb/:/data/db
+      - /var/data/recs_db:/data/db
   nodejs:
     build:
       dockerfile: Dockerfile
@@ -15,7 +15,15 @@ services:
       - PORT=8080
       - MONGO_URL=mongodb://mongodb:27017
       - MONGO_DB_NAME=from_docker
+      - RECS_ADDR=http://python:5000
     ports:
       - 8080:8080
     depends_on:
       - mongodb
+      - python
+  python:
+    extends:
+      file: ./RecommendationProject/docker-compose.yml
+      service: flask
+    ports:
+      - 5000:5000

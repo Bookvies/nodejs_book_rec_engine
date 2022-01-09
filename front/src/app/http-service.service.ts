@@ -39,7 +39,7 @@ export class HttpServiceService {
             method: type,
             url: url,
             data: body,
-            timeout: 5000,
+            timeout: 30000,
             withCredentials: true,
         } )
             .then( ( val ) => {
