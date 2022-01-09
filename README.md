@@ -12,6 +12,18 @@
 
 <p>
     <ul>
+    To use all project:
+        <li>git clone [this]</li>
+        <li>cd RecommendationProject</li>
+        <li>git submodule init</li>
+        <li>git submodule update</li>
+        <li>cd ..</li>
+        <li>docker-compose up -d</li>
+    </ul>
+<p>
+
+<p>
+    <ul>
     Stepst to build from scratch:
         <li>npm i</li>
         <li>npm --prefix=front i</li>
@@ -31,5 +43,7 @@
         <li>Mongodb</li>
     </ul>
 <p>
+
+
 
 
