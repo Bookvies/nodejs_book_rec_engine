@@ -70,7 +70,6 @@ export class recommendation_page {
             for ( const v in req.body.reviews ) {
                 data[req.body.reviews[v]['Book-Title']] = req.body.reviews[v].rating;
             }
-            this.logger.error( `Sending to ${process.env.RECS_ADDR || '127.0.0.1:5000'}` )
             await axios.default( {
                 method: 'POST',
                 url: '/recs/books',
